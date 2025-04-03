@@ -1,0 +1,18 @@
+name: install dependencies
+description: set up python & install dependencies
+
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+        cache: 'pip'
+    - name: Install poetry
+      shell: bash
+      run: curl -sSL https://install.python-poetry.org | python3 -
+    - name: Install dependencies
+      shell: bash
+      run: |
+        poetry lock --no-update
+        poetry install

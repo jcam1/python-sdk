@@ -1,0 +1,6 @@
+template: |
+  ## 変更点
+
+  $CHANGES
+
+  **完全な変更履歴**: https://github.com/$OWNER/$REPOSITORY/compare/$PREVIOUS_TAG...v$RESOLVED_VERSION

@@ -1,0 +1,24 @@
+name: publish package
+description: publish package to PyPI
+inputs:
+  pypi-token:
+    description: 'PyPI authentication token'
+    required: true
+  working-directory:
+    description: 'working directory'
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: build & package
+      shell: bash
+      run: |
+        cd ${{ inputs.working-directory }}
+        poetry build
+    - name: publish package
+      shell: bash
+      run: |
+        cd ${{ inputs.working-directory }}
+        poetry config pypi-token.pypi ${{ inputs.pypi-token }}
+        poetry publish

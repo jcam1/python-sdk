@@ -1,0 +1,65 @@
+[tool.poetry]
+name = "jpyc-sdk-python"
+version = "1.0.0"
+description = "Python SDK for JPYC - Japanese Yen Stablecoin"
+authors = ["mameta <mameta.zk@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+repository = "https://github.com/yourusername/jpyc-sdk-python"
+keywords = ["jpyc", "stablecoin", "ethereum", "web3", "blockchain"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+]
+packages = [{include = "jpyc_sdk"}]
+
+[tool.poetry.dependencies]
+python = ">=3.11,<4.0"
+web3 = ">=7.9.0,<8.0.0"
+pydantic = ">=2.10.6,<3.0.0"
+typing-extensions = ">=4.12.2,<5.0.0"
+python-dotenv = ">=1.0.1,<2.0.0"
+hexbytes = ">=1.2.0"  # 修正: web3の要件に合わせてアップデート
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.5"
+mypy = "^1.15.0"
+black = "^25.1.0"
+sphinx = "^7.2.6"
+pytest-asyncio = "^0.25.3"
+pytest-cov = "^6.0.0"
+sphinx-rtd-theme = "^2.0.0"
+pytest-mock = "^3.14.0"
+myst-parser = "^3.0.0"
+
+# ドキュメント生成用のスクリプトを修正
+[tool.poetry.scripts]
+# 基本的なドキュメント生成コマンド
+docs = "sphinx.cmd.build:main"
+docs-clean = "sphinx.cmd.build:main"
+
+# APIドキュメント生成コマンド（簡素化）
+sphinx-apidoc = "sphinx.ext.apidoc:main"
+sphinx-build = "sphinx.cmd.build:main"
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 100
+target-version = ["py311"]
+
+[tool.mypy]
+python_version = "3.11"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"

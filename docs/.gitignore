@@ -1,0 +1,12 @@
+# Sphinxビルドディレクトリ
+_build/
+_autosummary/
+api/
+
+# 中間ファイル
+_static/
+_templates/
+
+# キャッシュ
+__pycache__/
+.doctrees/ 

@@ -1,0 +1,69 @@
+name: run static checks
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  detect-changes:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    permissions:
+      pull-requests: read
+    outputs:
+      root: ${{ steps.filter.outputs.root }}
+      sdk: ${{ steps.filter.outputs.sdk }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            root:
+              - '.github/**'
+              - 'docs/**'
+              - 'README.md'
+              - 'pyproject.toml'
+              - 'poetry.lock'
+            sdk:
+              - 'jpyc_sdk/**'
+              - 'tests/**'
+              - 'pyproject.toml'
+
+  check-root:
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.root == 'true' }}
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/install-dependencies
+      - name: format check
+        run: poetry run black --check .github docs README.md
+
+  check-sdk:
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.sdk == 'true' }}
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/install-dependencies
+      - name: type check
+        run: poetry run mypy jpyc_sdk
+      - name: lint check
+        run: poetry run black --check jpyc_sdk tests
+      - name: run tests
+        run: poetry run pytest

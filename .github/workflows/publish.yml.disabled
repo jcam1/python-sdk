@@ -1,0 +1,87 @@
+name: publish package to PyPI
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'jpyc_sdk/**'
+      - 'pyproject.toml'
+
+jobs:
+  detect-changes:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    permissions:
+      pull-requests: read
+    outputs:
+      sdk: ${{ steps.filter.outputs.sdk }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            sdk:
+              - 'jpyc_sdk/**'
+              - 'pyproject.toml'
+
+  push-git-tag:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./
+    timeout-minutes: 3
+    outputs:
+      tag-name: ${{ 'v' }}${{ env.GIT_TAG_VERSION }}
+      tag-version: ${{ env.GIT_TAG_VERSION }}
+      tag-exists: ${{ steps.create-tag.outputs.tag_exists }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/install-dependencies
+      - name: get version from `pyproject.toml`
+        run: echo "GIT_TAG_VERSION=$(poetry version -s)" >> $GITHUB_ENV
+      - uses: rickstaa/action-create-tag@v1
+        id: create-tag
+        with:
+          tag: ${{ 'v' }}${{ env.GIT_TAG_VERSION }}
+
+  publish-release-note:
+    needs: push-git-tag
+    if: ${{ needs.push-git-tag.outputs.tag-exists == 'false' }}
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./
+    timeout-minutes: 5
+    permissions:
+      contents: write
+      pull-requests: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: release-drafter/release-drafter@v6
+        with:
+          name: ${{ needs.push-git-tag.outputs.tag-name }}
+          tag: ${{ needs.push-git-tag.outputs.tag-name }}
+          version: ${{ needs.push-git-tag.outputs.tag-version }}
+          publish: 'true'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  publish-sdk:
+    needs: [detect-changes, publish-release-note]
+    if: ${{ needs.detect-changes.outputs.sdk == 'true' }}
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/install-dependencies
+      - name: build package
+        run: poetry build
+      - uses: ./.github/actions/publish-package
+        with:
+          working-directory: ./
+          pypi-token: ${{ secrets.PYPI_TOKEN }}
