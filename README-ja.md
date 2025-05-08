@@ -1,4 +1,4 @@
 # JPYC Python SDK
 
 > [!IMPORTANT]
-> TODO: README in English
+> TODO: README in Japanese
