@@ -1,0 +1,56 @@
+[project]
+name = "core-sdk"
+version = "1.0.0"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+description = "Python SDKs for JPYCv2 contracts"
+readme = "README.md"
+keywords = [
+    "jpyc",
+    "jpy",
+    "stablecoin",
+    "ethereum",
+    "evm",
+    "erc20",
+    "blockchain",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Programming Language :: Python :: 3.15",
+    "Topic :: Software Development :: Libraries",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+authors = [
+    { name = "mameta", email = "mameta.zk@gmail.com" },
+    { name = "SeiyaKobayashi", email = "eng@seiya.work" },
+]
+maintainers = [
+    { name = "mameta", email = "mameta.zk@gmail.com" },
+    { name = "SeiyaKobayashi", email = "eng@seiya.work" },
+]
+dependencies = [
+    "pydantic>=2.11.4",
+    "python-dotenv>=1.1.0",
+    "web3>=7.11.0",
+]
+
+[project.urls]
+repository = "https://github.com/jcam1/python-sdk"
+documentation = "https://github.com/jcam1/python-sdk/tree/main/docs"
+"Bug Tracker" = "https://github.com/jcam1/python-sdk/issues/new?template=bug_report.md"
+
+[dependency-groups]
+dev = [
+    "mypy>=1.15.0",
+    "pytest>=8.3.5",
+    "pytest-cov>=6.1.1",
+    "ruff>=0.11.9",
+    "sphinx>=8.2.3",
+]
