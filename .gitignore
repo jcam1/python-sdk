@@ -1,2 +1,6 @@
+# python
+.venv
+.python-version
+
 # misc
 cspell.json
