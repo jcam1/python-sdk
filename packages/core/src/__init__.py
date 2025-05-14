@@ -1,1 +1,2 @@
-from client import *
+from .client import *
+from .jpyc import *
