@@ -1,25 +1,11 @@
-from typing import Final, List, Literal, TypeAlias, TypedDict
+from typing import Final
 
-from utils import NetworkNotSupported
+from .errors import NetworkNotSupported
+from .types import ChainName, NetworkMetadata
 
 ##################
 # Chain Metadata #
 ##################
-
-ChainName: TypeAlias = Literal[
-    "ethereum",
-    "polygon",
-    "gnosis",
-    "avalanche",
-    "astar",
-    "shiden",
-    "local",
-]
-
-class NetworkMetadata(TypedDict):
-    id: int
-    name: str
-    rpc_endpoints: List[str]
 
 SUPPORTED_CHAINS: Final[dict[ChainName, dict[str, NetworkMetadata]]] = {
     "ethereum": {

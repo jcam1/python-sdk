@@ -1,4 +1,4 @@
-from utils import enumerate_supported_networks
+from .chains import enumerate_supported_networks
 
 class JpycSdkError(Exception):
     """Base class for any SDK-related errors."""
@@ -16,3 +16,12 @@ class NetworkNotSupported(JpycSdkError):
             f"Network '{chain_name}/{network_name}' is not supported. "
             f"Supported networks are: {enumerate_supported_networks()}"
         )
+
+class TransactionFailed(JpycSdkError):
+    """Raised when failed to send a transaction.
+
+    Attributes:
+        message (str): Error message
+    """
+    def __init__(self, message: str):
+        super().__init__(f"Failed to send a transaction: '{message}")
