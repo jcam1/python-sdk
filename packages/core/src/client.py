@@ -7,8 +7,8 @@ from utils.chains import (
     get_default_rpc_endpoint,
 )
 from utils.constants import (
-    poa_middleware,
-    sign_middleware,
+    POA_MIDDLEWARE,
+    SIGN_MIDDLEWARE,
 )
 from utils.errors import AccountNotInitialized
 
@@ -62,13 +62,13 @@ class SdkClient(ISdkClient):
         w3 = Web3(HTTPProvider(rpc_endpoint))
         w3.middleware_onion.inject(
             ExtraDataToPOAMiddleware,
-            name=poa_middleware,
+            name=POA_MIDDLEWARE,
             layer=0,
         )
         if account is not None:
             w3.middleware_onion.inject(
                 SignAndSendRawMiddlewareBuilder.build(account),
-                name=sign_middleware,
+                name=SIGN_MIDDLEWARE,
                 layer=0,
             )
 

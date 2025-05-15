@@ -4,8 +4,8 @@ from .chains import *
 from .constants import *
 from .currencies import *
 from .errors import *
-from .transactions import *
 from .types import *
+from .validators import *
 
 __all__ = [
     # abi
@@ -23,20 +23,31 @@ __all__ = [
     "is_supported_network",
     "get_default_rpc_endpoint",
     # constants
-    "poa_middleware",
-    "sign_middleware",
+    "POA_MIDDLEWARE",
+    "SIGN_MIDDLEWARE",
+    "UINT_MIN",
+    "UINT256_MAX",
+    "UINT8_MAX",
     # currency
     "remove_decimals",
     "restore_decimals",
     # errors
     "NetworkNotSupported",
     "AccountNotInitialized",
+    "InvalidChecksumAddress",
+    "InvalidUint8",
+    "InvalidUint256",
+    "InvalidBytes32",
     "TransactionSimulationFailed",
     "TransactionFailedToSend",
-    # transactions
-    "catch_transaction_errors",
     # types
     "ChainName",
     "NetworkMetadata",
     "ContractVersion",
+    "TransactionArgs",
+    # validators
+    "ChecksumAddress"
+    "Bytes32",
+    "Uint256",
+    "Uint8",
 ]
