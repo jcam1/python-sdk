@@ -2,7 +2,7 @@
 name = "jpyc-core-sdk"
 version = "1.0.0"
 requires-python = ">=3.11"
-license = { text = "MIT" }
+license = "MIT"
 description = "Python SDKs for JPYCv2 contracts"
 readme = "README.md"
 keywords = [
@@ -17,7 +17,6 @@ keywords = [
 classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
-    "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",

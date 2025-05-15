@@ -2,15 +2,15 @@ from eth_account.signers.local import LocalAccount
 from web3 import Account, HTTPProvider, Web3
 from web3.middleware import ExtraDataToPOAMiddleware, SignAndSendRawMiddlewareBuilder
 
-from core.src.interfaces import ISdkClient
-from core.src.utils.chains import (
+from interfaces import ISdkClient
+from utils.chains import (
     get_default_rpc_endpoint,
 )
-from core.src.utils.constants import (
+from utils.constants import (
     poa_middleware,
     sign_middleware,
 )
-from core.src.utils.errors import AccountNotInitialized
+from utils.errors import AccountNotInitialized
 
 class SdkClient(ISdkClient):
     """SDK client."""
@@ -26,7 +26,7 @@ class SdkClient(ISdkClient):
         Args:
             chain_name (str): Chain name
             network_name (str): Network name
-            private_key (str): private key of EOA
+            private_key (str | None): private key of EOA
 
         Raises:
             NetworkNotSupported: If the specified network is not supported by the SDK
@@ -59,7 +59,7 @@ class SdkClient(ISdkClient):
         Returns:
             Web3: Configured web3 instance
         """
-        w3 = Web3(HTTPProvider(Web3(HTTPProvider(rpc_endpoint))))
+        w3 = Web3(HTTPProvider(rpc_endpoint))
         w3.middleware_onion.inject(
             ExtraDataToPOAMiddleware,
             name=poa_middleware,

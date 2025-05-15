@@ -1,7 +1,7 @@
 from typing import Final
 
-from core.src.utils.errors import NetworkNotSupported
-from core.src.utils.types import ChainMetadata
+from .errors import NetworkNotSupported
+from .types import ChainMetadata
 
 ##################
 # Chain Metadata #
@@ -120,4 +120,4 @@ def get_default_rpc_endpoint(chain_name: str, network_name: str) -> str:
     if not is_supported_network(chain_name, network_name):
             raise NetworkNotSupported(chain_name, network_name)
 
-    return SUPPORTED_CHAINS[chain_name][network_name].rpc_endpoints[0]
+    return SUPPORTED_CHAINS[chain_name][network_name]["rpc_endpoints"][0]

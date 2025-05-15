@@ -2,7 +2,7 @@ import json
 from pathlib import Path
 from typing import Any
 
-from core.src.utils.types import ContractVersion
+from .types import ContractVersion
 
 def resolve_abi_file_path(contract_version: ContractVersion) -> str:
     """Resolve the path of ABI file from the specified contract version.
@@ -13,7 +13,7 @@ def resolve_abi_file_path(contract_version: ContractVersion) -> str:
     Returns:
         str: Absolute path of ABI file
     """
-    path = Path(__file__).parent.parent.joinpath("abis", f"v{contract_version}.json")
+    path = Path(__file__).parent.parent.parent.joinpath("abis", f"v{contract_version}.json")
 
     return path.absolute()
 

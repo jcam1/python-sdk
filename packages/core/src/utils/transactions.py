@@ -1,4 +1,4 @@
-from core.src.utils.errors import (
+from .errors import (
     AccountNotInitialized,
     TransactionFailedToSend,
     TransactionSimulationFailed,

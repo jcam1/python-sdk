@@ -1,5 +1,3 @@
-from core.src.utils.chains import enumerate_supported_networks
-
 class JpycSdkError(Exception):
     """Base class for any SDK-related errors."""
     pass
@@ -16,6 +14,8 @@ class NetworkNotSupported(JpycSdkError):
         network_name (str): Network name
     """
     def __init__(self, chain_name: str, network_name: str):
+        from .chains import enumerate_supported_networks
+
         super().__init__(
             f"Network '{chain_name}/{network_name}' is not supported. "
             f"Supported networks are: {enumerate_supported_networks()}"

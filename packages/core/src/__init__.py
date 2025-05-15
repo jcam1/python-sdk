@@ -1,7 +1,7 @@
 from importlib.metadata import version
 
-from core.src.client import *
-from core.src.jpyc import *
+from .client import *
+from .jpyc import *
 
 __version__ = version("jpyc-core-sdk")
 __all__ = [

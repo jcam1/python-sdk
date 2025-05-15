@@ -1,5 +1,5 @@
-from core.src.interfaces.client import *
-from core.src.interfaces.jpyc import *
+from .client import *
+from .jpyc import *
 
 __all__ = [
     "ISdkClient",
