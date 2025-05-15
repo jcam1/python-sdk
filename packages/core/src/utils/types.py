@@ -19,6 +19,8 @@ class NetworkMetadata(TypedDict):
     name: str
     rpc_endpoints: List[str]
 
+ChainMetadata: TypeAlias = dict[ChainName, dict[str, NetworkMetadata]]
+
 #############
 # Contracts #
 #############

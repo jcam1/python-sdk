@@ -8,7 +8,7 @@ from eth_typing import (
 from web3 import Web3
 from web3.constants import ADDRESS_ZERO
 
-from .types import ContractVersion
+from core.src.utils.types import ContractVersion
 
 ####################################
 # Address-related helper functions #

@@ -1,13 +1,13 @@
 from typing import Final
 
-from .errors import NetworkNotSupported
-from .types import ChainName, NetworkMetadata
+from core.src.utils.errors import NetworkNotSupported
+from core.src.utils.types import ChainMetadata
 
 ##################
 # Chain Metadata #
 ##################
 
-SUPPORTED_CHAINS: Final[dict[ChainName, dict[str, NetworkMetadata]]] = {
+SUPPORTED_CHAINS: Final[ChainMetadata] = {
     "ethereum": {
         "mainnet": {
             "id": 1,
@@ -78,6 +78,7 @@ SUPPORTED_CHAINS: Final[dict[ChainName, dict[str, NetworkMetadata]]] = {
         },
     },
 }
+"""ChainMetadata: Supported chains & networks."""
 
 ##################################
 # Chain-related helper functions #
@@ -112,6 +113,9 @@ def get_default_rpc_endpoint(chain_name: str, network_name: str) -> str:
 
     Returns:
         str: RPC endpoint
+
+    Raises:
+        NetworkNotSupported: If the specified network is not supported by the SDK
     """
     if not is_supported_network(chain_name, network_name):
             raise NetworkNotSupported(chain_name, network_name)
