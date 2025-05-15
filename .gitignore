@@ -1,6 +1,9 @@
 # python
 .venv
 .python-version
+dist
+*.egg-info
+__pycache__
 
 # misc
 cspell.json

@@ -1,2 +1,7 @@
+# python
+dist
+*.egg-info
+__pycache__
+
 # misc
 DS_STORE
