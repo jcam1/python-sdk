@@ -16,6 +16,9 @@ class ISdkClient(ABC):
 
         Returns:
             Web3: Configured web3 instance
+
+        Raises:
+            NetworkNotSupported: If the specified network is not supported by the SDK
         """
         pass
 
@@ -45,9 +48,12 @@ class ISdkClient(ABC):
 
     @abstractmethod
     def get_account_address(self) -> str:
-        """Get address of configured account.
+        """Get address of the configured account.
 
         Returns:
-            str: Public address (starting with `0x`) of account
+            str: Public address of account
+
+        Raises:
+            AccountNotInitialized: If account is not initialized
         """
         pass

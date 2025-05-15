@@ -94,6 +94,10 @@ class IJPYC(ABC):
 
         Returns:
             str: Transaction hash
+
+        Raises:
+            AccountNotInitialized: If account is not initialized
+            TransactionFailedToSend: If failed to send a transaction
         """
         pass
 
@@ -107,6 +111,10 @@ class IJPYC(ABC):
 
         Returns:
             str: Transaction hash
+
+        Raises:
+            AccountNotInitialized: If account is not initialized
+            TransactionFailedToSend: If failed to send a transaction
         """
         pass
 
@@ -120,6 +128,10 @@ class IJPYC(ABC):
 
         Returns:
             str: Transaction hash
+
+        Raises:
+            AccountNotInitialized: If account is not initialized
+            TransactionFailedToSend: If failed to send a transaction
         """
         pass
 
@@ -134,6 +146,10 @@ class IJPYC(ABC):
 
         Returns:
             str: Transaction hash
+
+        Raises:
+            AccountNotInitialized: If account is not initialized
+            TransactionFailedToSend: If failed to send a transaction
         """
         pass
 
@@ -165,6 +181,10 @@ class IJPYC(ABC):
 
         Returns:
             str: Transaction hash
+
+        Raises:
+            AccountNotInitialized: If account is not initialized
+            TransactionFailedToSend: If failed to send a transaction
         """
         pass
 
@@ -196,6 +216,10 @@ class IJPYC(ABC):
 
         Returns:
             str: Transaction hash
+
+        Raises:
+            AccountNotInitialized: If account is not initialized
+            TransactionFailedToSend: If failed to send a transaction
         """
         pass
 
@@ -219,6 +243,10 @@ class IJPYC(ABC):
 
         Returns:
             str: Transaction hash
+
+        Raises:
+            AccountNotInitialized: If account is not initialized
+            TransactionFailedToSend: If failed to send a transaction
         """
         pass
 
@@ -232,6 +260,10 @@ class IJPYC(ABC):
 
         Returns:
             str: Transaction hash
+
+        Raises:
+            AccountNotInitialized: If account is not initialized
+            TransactionFailedToSend: If failed to send a transaction
         """
         pass
 
@@ -245,6 +277,10 @@ class IJPYC(ABC):
 
         Returns:
             str: Transaction hash
+
+        Raises:
+            AccountNotInitialized: If account is not initialized
+            TransactionFailedToSend: If failed to send a transaction
         """
         pass
 
@@ -258,6 +294,10 @@ class IJPYC(ABC):
 
         Returns:
             str: Transaction hash
+
+        Raises:
+            AccountNotInitialized: If account is not initialized
+            TransactionFailedToSend: If failed to send a transaction
         """
         pass
 
@@ -285,5 +325,9 @@ class IJPYC(ABC):
 
         Returns:
             str: Transaction hash
+
+        Raises:
+            AccountNotInitialized: If account is not initialized
+            TransactionFailedToSend: If failed to send a transaction
         """
         pass
