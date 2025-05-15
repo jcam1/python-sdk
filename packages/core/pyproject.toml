@@ -35,8 +35,8 @@ maintainers = [
     { name = "SeiyaKobayashi", email = "eng@seiya.work" },
 ]
 dependencies = [
+    "eth-typing>=5.2.1",
     "pydantic>=2.11.4",
-    "python-dotenv>=1.1.0",
     "web3>=7.11.0",
 ]
 
@@ -49,10 +49,10 @@ documentation = "https://github.com/jcam1/python-sdk/tree/main/docs"
 
 [dependency-groups]
 dev = [
-    "eth-typing>=5.2.1",
     "mypy>=1.15.0",
     "pytest>=8.3.5",
     "pytest-cov>=6.1.1",
+    "python-dotenv>=1.1.0",
     "ruff>=0.11.9",
     "sphinx>=8.2.3",
 ]
