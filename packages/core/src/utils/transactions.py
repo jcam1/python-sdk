@@ -1,4 +1,8 @@
-from core.src.utils.errors import AccountNotInitialized, TransactionFailedToSend
+from core.src.utils.errors import (
+    AccountNotInitialized,
+    TransactionFailedToSend,
+    TransactionSimulationFailed,
+)
 
 def catch_transaction_errors(func):
     """Decorator to catch any transaction errors.
@@ -12,6 +16,8 @@ def catch_transaction_errors(func):
             func(*args, **kwargs)
         except AccountNotInitialized:
             raise AccountNotInitialized()
+        except TransactionSimulationFailed as e:
+            raise TransactionSimulationFailed(e)
         except Exception as e:
             raise TransactionFailedToSend(e)
 

@@ -159,8 +159,8 @@ class IJPYC(ABC):
         from_: ChecksumAddress,
         to: ChecksumAddress,
         value: Decimal,
-        validAfter: int,
-        validBefore: int,
+        valid_after: int,
+        valid_before: int,
         nonce: str,
         v: int,
         r: str,
@@ -172,8 +172,8 @@ class IJPYC(ABC):
             from_ (ChecksumAddress): Owner address
             to (ChecksumAddress): Receiver allowance
             value (Decimal): Amount of tokens to transfer
-            validAfter (int): Unix time when transaction becomes valid
-            validBefore (int): Unix time when transaction becomes invalid
+            valid_after (int): Unix time when transaction becomes valid
+            valid_before (int): Unix time when transaction becomes invalid
             nonce (str): Unique nonce
             v (int): v of ECDSA
             r (str): r of ECDSA
@@ -194,8 +194,8 @@ class IJPYC(ABC):
         from_: ChecksumAddress,
         to: ChecksumAddress,
         value: Decimal,
-        validAfter: int,
-        validBefore: int,
+        valid_after: int,
+        valid_before: int,
         nonce: str,
         v: int,
         r: str,
@@ -207,8 +207,8 @@ class IJPYC(ABC):
             from_ (ChecksumAddress): Owner address
             to (ChecksumAddress): Receiver allowance
             value (Decimal): Amount of tokens to transfer
-            validAfter (int): Unix time when transaction becomes valid
-            validBefore (int): Unix time when transaction becomes invalid
+            valid_after (int): Unix time when transaction becomes valid
+            valid_before (int): Unix time when transaction becomes invalid
             nonce (str): Unique nonce
             v (int): v of ECDSA
             r (str): r of ECDSA

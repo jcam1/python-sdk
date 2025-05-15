@@ -1,6 +1,8 @@
 from decimal import Decimal
+from typing import Any
 
 from eth_typing import ChecksumAddress
+from web3.contract.contract import ContractFunction
 
 from core.src.interfaces import IJPYC, ISdkClient
 from core.src.utils.abis import (
@@ -15,7 +17,7 @@ from core.src.utils.currencies import (
     remove_decimals,
     restore_decimals,
 )
-from core.src.utils.errors import AccountNotInitialized
+from core.src.utils.errors import AccountNotInitialized, TransactionSimulationFailed
 from core.src.utils.transactions import catch_transaction_errors
 from core.src.utils.types import ContractVersion
 
@@ -53,6 +55,20 @@ class JPYC(IJPYC):
         if sign_middleware not in self.client.w3.middleware_onion:
             raise AccountNotInitialized()
 
+    def __simulate_transaction(self, contract_func: ContractFunction, func_args: dict[Any]) -> None:
+        """Simulate a transaction locally.
+
+        Note:
+            This method should be called before sending actual transactions.
+
+        Raises:
+            TransactionSimulationFailed: If transaction simulation fails
+        """
+        try:
+            contract_func.call(**func_args)
+        except Exception as e:
+            raise TransactionSimulationFailed(e)
+
     ##################
     # View functions #
     ##################
@@ -83,44 +99,70 @@ class JPYC(IJPYC):
     # Mutation functions #
     ######################
 
-    # TODO: transaction simulation using eth.call()
-
     @catch_transaction_errors
     def configure_minter(self, minter: ChecksumAddress, minter_allowed_amount: Decimal) -> str:
         self.__account_initialized()
 
-        return self.contact.functions.configureMinter(
-            minter,
-            remove_decimals(minter_allowed_amount),
-        ).call()
+        args = {
+            "minter": minter,
+            "minterAllowedAmount": remove_decimals(minter_allowed_amount),
+        }
+
+        self.__simulate_transaction(
+            contract_func=self.contact.functions.configureMinter,
+            func_args=args
+        )
+
+        return self.contact.functions.configureMinter(**args).transact()
 
     @catch_transaction_errors
     def mint(self, to: ChecksumAddress, amount: Decimal) -> str:
         self.__account_initialized()
 
-        return self.contact.functions.mint(
-            to,
-            remove_decimals(amount),
-        ).call()
+        args = {
+            "to": to,
+            "amount": remove_decimals(amount),
+        }
+
+        self.__simulate_transaction(
+            contract_func=self.contact.functions.mint,
+            func_args=args
+        )
+
+        return self.contact.functions.mint(**args).transact()
 
     @catch_transaction_errors
     def transfer(self, to: ChecksumAddress, value: Decimal) -> str:
         self.__account_initialized()
 
-        return self.contact.functions.transfer(
-            to,
-            remove_decimals(value),
-        ).call()
+        args = {
+            "to": to,
+            "value": remove_decimals(value),
+        }
+
+        self.__simulate_transaction(
+            contract_func=self.contact.functions.transfer,
+            func_args=args
+        )
+
+        return self.contact.functions.transfer(**args).transact()
 
     @catch_transaction_errors
     def transfer_from(self, from_: ChecksumAddress, to: ChecksumAddress, value: Decimal) -> str:
         self.__account_initialized()
 
-        return self.contact.functions.transferFrom(
-            from_,
-            to,
-            remove_decimals(value),
-        ).call()
+        args = {
+            "from": from_,
+            "to": to,
+            "value": remove_decimals(value),
+        }
+
+        self.__simulate_transaction(
+            contract_func=self.contact.functions.transferFrom,
+            func_args=args
+        )
+
+        return self.contact.functions.transferFrom(**args).transact()
 
     @catch_transaction_errors
     def transfer_with_authorization(
@@ -128,8 +170,8 @@ class JPYC(IJPYC):
         from_: ChecksumAddress,
         to: ChecksumAddress,
         value: Decimal,
-        validAfter: int,
-        validBefore: int,
+        valid_after: int,
+        valid_before: int,
         nonce: str,
         v: int,
         r: str,
@@ -137,17 +179,24 @@ class JPYC(IJPYC):
     ) -> str:
         self.__account_initialized()
 
-        return self.contact.functions.transferWithAuthorization(
-            from_,
-            to,
-            remove_decimals(value),
-            validAfter,
-            validBefore,
-            nonce,
-            v,
-            r,
-            s,
-        ).call()
+        args = {
+            "from": from_,
+            "to": to,
+            "value": remove_decimals(value),
+            "validAfter": valid_after,
+            "validBefore": valid_before,
+            "nonce": nonce,
+            "v": v,
+            "r": r,
+            "s": s,
+        }
+
+        self.__simulate_transaction(
+            contract_func=self.contact.functions.transferWithAuthorization,
+            func_args=args
+        )
+
+        return self.contact.functions.transferWithAuthorization(**args).transact()
 
     @catch_transaction_errors
     def receive_with_authorization(
@@ -155,8 +204,8 @@ class JPYC(IJPYC):
         from_: ChecksumAddress,
         to: ChecksumAddress,
         value: Decimal,
-        validAfter: int,
-        validBefore: int,
+        valid_after: int,
+        valid_before: int,
         nonce: str,
         v: int,
         r: str,
@@ -164,17 +213,24 @@ class JPYC(IJPYC):
     ) -> str:
         self.__account_initialized()
 
-        return self.contact.functions.receiveWithAuthorization(
-            from_,
-            to,
-            remove_decimals(value),
-            validAfter,
-            validBefore,
-            nonce,
-            v,
-            r,
-            s,
-        ).call()
+        args = {
+            "from": from_,
+            "to": to,
+            "value": remove_decimals(value),
+            "validAfter": valid_after,
+            "validBefore": valid_before,
+            "nonce": nonce,
+            "v": v,
+            "r": r,
+            "s": s,
+        }
+
+        self.__simulate_transaction(
+            contract_func=self.contact.functions.receiveWithAuthorization,
+            func_args=args
+        )
+
+        return self.contact.functions.receiveWithAuthorization(**args).transact()
 
     @catch_transaction_errors
     def cancel_authorization(
@@ -187,40 +243,68 @@ class JPYC(IJPYC):
     ) -> str:
         self.__account_initialized()
 
-        return self.contact.functions.cancelAuthorization(
-            authorizer,
-            nonce,
-            v,
-            r,
-            s,
-        ).call()
+        args = {
+            "authorizer": authorizer,
+            "nonce": nonce,
+            "v": v,
+            "r": r,
+            "s": s,
+        }
+
+        self.__simulate_transaction(
+            contract_func=self.contact.functions.cancelAuthorization,
+            func_args=args
+        )
+
+        return self.contact.functions.cancelAuthorization(**args).transact()
 
     @catch_transaction_errors
     def approve(self, spender: ChecksumAddress, value: Decimal) -> str:
         self.__account_initialized()
 
-        return self.contact.functions.approve(
-            spender,
-            remove_decimals(value),
-        ).call()
+        args = {
+            "spender": spender,
+            "value": remove_decimals(value),
+        }
+
+        self.__simulate_transaction(
+            contract_func=self.contact.functions.approve,
+            func_args=args
+        )
+
+        return self.contact.functions.approve(**args).transact()
 
     @catch_transaction_errors
     def increase_allowance(self, spender: ChecksumAddress, increment: Decimal) -> str:
         self.__account_initialized()
 
-        return self.contact.functions.increaseAllowance(
-            spender,
-            remove_decimals(increment),
-        ).call()
+        args = {
+            "spender": spender,
+            "increment": remove_decimals(increment),
+        }
+
+        self.__simulate_transaction(
+            contract_func=self.contact.functions.increaseAllowance,
+            func_args=args
+        )
+
+        return self.contact.functions.increaseAllowance(**args).transact()
 
     @catch_transaction_errors
     def decrease_allowance(self, spender: ChecksumAddress, decrement: Decimal) -> str:
         self.__account_initialized()
 
-        return self.contact.functions.decreaseAllowance(
-            spender,
-            remove_decimals(decrement),
-        ).call()
+        args = {
+            "spender": spender,
+            "decrement": remove_decimals(decrement),
+        }
+
+        self.__simulate_transaction(
+            contract_func=self.contact.functions.decreaseAllowance,
+            func_args=args
+        )
+
+        return self.contact.functions.decreaseAllowance(**args).transact()
 
     @catch_transaction_errors
     def permit(
@@ -235,12 +319,19 @@ class JPYC(IJPYC):
     ) -> str:
         self.__account_initialized()
 
-        return self.contact.functions.permit(
-            owner,
-            spender,
-            remove_decimals(value),
-            deadline,
-            v,
-            r,
-            s,
-        ).call()
+        args = {
+            "owner": owner,
+            "spender": spender,
+            "value": remove_decimals(value),
+            "deadline": deadline,
+            "v": v,
+            "r": r,
+            "s": s,
+        }
+
+        self.__simulate_transaction(
+            contract_func=self.contact.functions.permit,
+            func_args=args
+        )
+
+        return self.contact.functions.permit(**args).transact()
