@@ -1,9 +1,8 @@
 from decimal import Decimal
 
 from eth_typing import ChecksumAddress
-from web3 import Web3
 
-from core.src.interfaces import IJPYC
+from core.src.interfaces import IJPYC, ISdkClient
 from core.src.utils.abis import (
     get_abi,
     resolve_abi_file_path,
@@ -25,22 +24,22 @@ class JPYC(IJPYC):
 
     def __init__(
         self,
-        w3: Web3,
+        client: ISdkClient,
         contract_version: ContractVersion = "2"
     ):
         """Constructor that initializes JPYC client.
 
         Args:
-            w3 (Web3): Configured web3 instance
+            client (ISdkClient): Configured SDK client
             contract_version (ContractVersion): Contract version
         """
-        self.w3 = w3
-        """Web3: Configured web3 instance"""
-        self.contract = w3.eth.contract(
+        self.client = client
+        """ISdkClient: Configured SDK client"""
+        self.contract = client.w3.eth.contract(
             address=get_proxy_address(contract_version=contract_version),
             abi=get_abi(resolve_abi_file_path(contract_version=contract_version)),
         )
-        """Contract: Contract instance"""
+        """Contract: Configured contract instance"""
 
     def __account_initialized(self) -> None:
         """Check if account is initialized.
@@ -51,7 +50,7 @@ class JPYC(IJPYC):
         Raises:
             AccountNotInitialized: If account is not initialized
         """
-        if sign_middleware not in self.w3.middleware_onion:
+        if sign_middleware not in self.client.w3.middleware_onion:
             raise AccountNotInitialized()
 
     ##################
