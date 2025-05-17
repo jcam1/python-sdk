@@ -26,3 +26,4 @@ ChainMetadata: TypeAlias = dict[ChainName, dict[str, NetworkMetadata]]
 #############
 
 ContractVersion: TypeAlias = Literal["2"]
+ArtifactType: TypeAlias = Literal["abi", "bytecode"]

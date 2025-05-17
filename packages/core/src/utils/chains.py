@@ -70,8 +70,8 @@ SUPPORTED_CHAINS: Final[ChainMetadata] = {
             "rpc_endpoints": ["https://shiden.public.blastapi.io"],
         },
     },
-    "local": {
-        "mainnet": {
+    "localhost": {
+        "devnet": {
             "id": 31337,
             "name": "Localhost Network",
             "rpc_endpoints": ["http://127.0.0.1:8545/"],

@@ -1,5 +1,5 @@
-from .client import *
-from .jpyc import *
+from .client import ISdkClient
+from .jpyc import IJPYC
 
 __all__ = [
     "ISdkClient",

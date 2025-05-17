@@ -100,8 +100,8 @@ class TransactionSimulationFailed(JpycSdkError):
             message=f"Failed to simulate a transaction locally: {message_}",
         )
 
-class TransactionFailedToSend(JpycSdkError):
-    """Raised when it fails to send a transaction.
+class TransactionFailed(JpycSdkError):
+    """Raised when transaction fails.
 
     Attributes:
         message (str): Error message
@@ -110,6 +110,6 @@ class TransactionFailedToSend(JpycSdkError):
 
     def __init__(self, message_: str):
         super().__init__(
-            code=TransactionFailedToSend.code,
-            message=f"Failed to send a transaction: {message_}",
+            code=TransactionFailed.code,
+            message=f"Transaction failed: {message_}",
         )

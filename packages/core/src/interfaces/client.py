@@ -35,14 +35,18 @@ class ISdkClient(ABC):
         pass
 
     @abstractmethod
-    def set_account(self, private_key: str) -> LocalAccount:
+    def set_account(self, private_key: str | None) -> LocalAccount | None:
         """Set account with private key.
 
+        Notes:
+            If `private_key` parameter is set to `None`, \
+            this method removes `account` from the configured web3 instance.
+
         Args:
-            private_key (str): Private key of account
+            private_key (str | None): Private key of account
 
         Returns:
-            LocalAccount: Configured account
+            LocalAccount | None: Configured account
         """
         pass
 

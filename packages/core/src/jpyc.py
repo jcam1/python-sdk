@@ -4,12 +4,12 @@ from pydantic import validate_call
 from web3.contract.contract import ContractFunction
 
 from interfaces import IJPYC, ISdkClient
-from utils.abis import (
-    get_abi,
-    resolve_abi_file_path,
-)
 from utils.addresses import (
     get_proxy_address,
+)
+from utils.artifacts import (
+    get_artifacts,
+    resolve_artifacts_file_path,
 )
 from utils.constants import SIGN_MIDDLEWARE
 from utils.currencies import (
@@ -18,7 +18,7 @@ from utils.currencies import (
 )
 from utils.errors import (
     AccountNotInitialized,
-    TransactionFailedToSend,
+    TransactionFailed,
     TransactionSimulationFailed,
 )
 from utils.types import ContractVersion
@@ -42,7 +42,10 @@ class JPYC(IJPYC):
         """ISdkClient: Configured SDK client"""
         self.contract = client.w3.eth.contract(
             address=get_proxy_address(contract_version=contract_version),
-            abi=get_abi(resolve_abi_file_path(contract_version=contract_version)),
+            abi=get_artifacts(
+                file_path=resolve_artifacts_file_path(contract_version=contract_version),
+                artifact_type="abi",
+            ),
         )
         """Contract: Configured contract instance"""
 
@@ -62,7 +65,11 @@ class JPYC(IJPYC):
         if SIGN_MIDDLEWARE not in self.client.w3.middleware_onion:
             raise AccountNotInitialized()
 
-    def __simulate_transaction(self, contract_func: ContractFunction, func_args: dict[Any]) -> None:
+    def __simulate_transaction(
+        self,
+        contract_func: ContractFunction,
+        func_args: dict[Any],
+    ) -> None:
         """Simulates a transaction locally.
 
         Note:
@@ -80,7 +87,11 @@ class JPYC(IJPYC):
         except Exception as e:
             raise TransactionSimulationFailed(e)
 
-    def __send_transaction(self, contract_func: ContractFunction, func_args: dict[Any]) -> Any:
+    def __send_transaction(
+        self,
+        contract_func: ContractFunction,
+        func_args: dict[Any],
+    ) -> Any:
         """Sends a transaction to blockchain.
 
         Args:
@@ -91,18 +102,19 @@ class JPYC(IJPYC):
             Any: Response from the contract function
 
         Raises:
-            TransactionFailedToSend: If it fails to send a transaction
+            TransactionFailed: If transaction fails
         """
         try:
             return contract_func(**func_args).transact()
         except Exception as e:
-            raise TransactionFailedToSend(e)
+            raise TransactionFailed(e)
 
     def __transact(self, contract_func: ContractFunction, func_args: dict[Any]) -> Any:
         """Helper method to prepare & send a transaction in one method.
 
         Args:
-            tx_args (TransactionArgs): Arguments necessary to send a transaction
+            contract_func (ContractFunction): Contract function
+            func_args (dict[Any]): Arguments of contract function
 
         Returns:
             Any: Response from the contract function
@@ -110,7 +122,7 @@ class JPYC(IJPYC):
         Raises:
             AccountNotInitialized: If account is not initialized
             TransactionSimulationFailed: If transaction simulation fails
-            TransactionFailedToSend: If it fails to send a transaction
+            TransactionFailedToSend: If transaction fails
         """
 
         self.__account_initialized()
