@@ -18,22 +18,23 @@ class SdkClient(ISdkClient):
 
     def __init__(
         self,
-        chain_name: str,
-        network_name: str,
+        chain_name: str | None = None,
+        network_name: str | None = None,
         rpc_endpoint: str | None = None,
         private_key: str | None = None,
     ):
         """Constructor that initializes SDK client.
 
         Notes:
-            This constructor prioritizes `rpc_endpoint` parameter over \
+            - Either `chain_name` & `network_name` parameters or `rpc_endpoint` parameter are required.
+            - This constructor prioritizes `rpc_endpoint` parameter over \
             `chain_name` & `network_name` parameters when configuring `rpc_endpoint`.
 
         Args:
-            chain_name (str): Chain name
-            network_name (str): Network name
-            rpc_endpoint (str | None): RPC endpoint
-            private_key (str | None): private key of EOA
+            chain_name (str, optional): Chain name
+            network_name (str, optional): Network name
+            rpc_endpoint (str, optional): RPC endpoint
+            private_key (str, optional): private key of EOA
 
         Raises:
             NetworkNotSupported: If the specified network is not supported by the SDK
@@ -52,8 +53,8 @@ class SdkClient(ISdkClient):
         self.account = account
         """LocalAccount | None: Account instance"""
 
+    @staticmethod
     def __configure_w3(
-            self,
             rpc_endpoint: str,
             account: LocalAccount | None = None,
         ) -> Web3:
@@ -61,7 +62,7 @@ class SdkClient(ISdkClient):
 
         Args:
             rpc_endpoint (str): RPC endpoint
-            account (LocalAccount | None): Account instance
+            account (LocalAccount, optional): Account instance
 
         Returns:
             Web3: Configured web3 instance

@@ -43,7 +43,7 @@ class ISdkClient(ABC):
             this method removes `account` from the configured web3 instance.
 
         Args:
-            private_key (str | None): Private key of account
+            private_key (str, optional): Private key of account
 
         Returns:
             LocalAccount | None: Configured account
