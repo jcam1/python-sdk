@@ -11,6 +11,7 @@ from utils.artifacts import (
     get_artifacts,
     resolve_artifacts_file_path,
 )
+from utils.chains import SUPPORTED_CHAINS
 from utils.constants import SIGN_MIDDLEWARE
 from utils.currencies import (
     remove_decimals,
@@ -30,28 +31,108 @@ class JPYC(IJPYC):
     def __init__(
         self,
         client: ISdkClient,
-        contract_version: ContractVersion = "2"
+        contract_version: ContractVersion = "2",
     ):
         """Constructor that initializes JPYC client.
+
+        Notes:
+            If `client` parameter is configured to use localhost network,\
+            this deploys JPYC contracts to localhost network, initializes it,\
+            and sets its address to `address` attribute.
 
         Args:
             client (ISdkClient): Configured SDK client
             contract_version (ContractVersion): Contract version
         """
+        if (client.w3.eth.chain_id == SUPPORTED_CHAINS["localhost"]["devnet"]["id"]):
+            address = self.__deploy_contract(
+                client=client,
+                contract_version=contract_version,
+            )
+            contract = self.__get_contract(
+                client=client,
+                contract_address=address,
+                contract_version=contract_version,
+            )
+            owner_address = client.get_account_address()
+            contract.functions.initialize(
+                "JPY Coin",
+                "JPYC",
+                "Yen",
+                18,
+                owner_address,
+                owner_address,
+                owner_address,
+                owner_address,
+                owner_address,
+            ).transact()
+        else:
+            address = get_proxy_address(contract_version=contract_version)
+            contract = self.__get_contract(
+                client=client,
+                contract_address=address,
+                contract_version=contract_version,
+            )
+
         self.client = client
         """ISdkClient: Configured SDK client"""
-        self.contract = client.w3.eth.contract(
-            address=get_proxy_address(contract_version=contract_version),
-            abi=get_artifacts(
-                file_path=resolve_artifacts_file_path(contract_version=contract_version),
-                artifact_type="abi",
-            ),
-        )
+        self.contract = contract
         """Contract: Configured contract instance"""
 
     ##################
     # Helper methods #
     ##################
+
+    @staticmethod
+    def __deploy_contract(
+        client: ISdkClient,
+        contract_version: ContractVersion = "2",
+    ) -> ChecksumAddress:
+        """Deploy contracts to the configured network.
+
+        Note:
+            This helper method is mainly for development purposes.\
+            Please use this method to deploy contracts to localhost network.
+
+        Args:
+            client (ISdkClient): Configured SDK client
+            contract_version (ContractVersion): Contract version
+
+        Returns:
+            ChecksumAddress: Address of the deployed contracts
+        """
+        file_path=resolve_artifacts_file_path(contract_version=contract_version)
+        contract = client.w3.eth.contract(
+            abi=get_artifacts(file_path, "abi"),
+            bytecode=get_artifacts(file_path, "bytecode"),
+        )
+        tx_hash = contract.constructor().transact()
+
+        return client.w3.eth.wait_for_transaction_receipt(tx_hash).contractAddress
+
+    @staticmethod
+    def __get_contract(
+        client: ISdkClient,
+        contract_address: ChecksumAddress,
+        contract_version: ContractVersion = "2",
+    ) -> ChecksumAddress:
+        """Get contract instance from the configured network.
+
+        Args:
+            client (ISdkClient): Configured SDK client
+            contract_address (ChecksumAddress): Contract address
+            contract_version (ContractVersion): Contract version
+
+        Returns:
+            ChecksumAddress: Address of the deployed contracts
+        """
+        return client.w3.eth.contract(
+            address=contract_address,
+            abi=get_artifacts(
+                file_path=resolve_artifacts_file_path(contract_version=contract_version),
+                artifact_type="abi",
+            ),
+        )
 
     def __account_initialized(self) -> None:
         """Checks if account is initialized.
@@ -65,8 +146,8 @@ class JPYC(IJPYC):
         if SIGN_MIDDLEWARE not in self.client.w3.middleware_onion:
             raise AccountNotInitialized()
 
+    @staticmethod
     def __simulate_transaction(
-        self,
         contract_func: ContractFunction,
         func_args: dict[Any],
     ) -> None:
@@ -83,12 +164,12 @@ class JPYC(IJPYC):
             TransactionSimulationFailed: If transaction simulation fails
         """
         try:
-            contract_func.call(**func_args)
+            contract_func(**func_args).call()
         except Exception as e:
             raise TransactionSimulationFailed(e)
 
+    @staticmethod
     def __send_transaction(
-        self,
         contract_func: ContractFunction,
         func_args: dict[Any],
     ) -> Any:
@@ -187,8 +268,8 @@ class JPYC(IJPYC):
         tx_args = {
             "contract_func": self.contract.functions.mint,
             "func_args": {
-                "to": to,
-                "amount": remove_decimals(amount),
+                "_to": to,
+                "_amount": remove_decimals(amount),
             },
         }
 

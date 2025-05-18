@@ -1,7 +1,6 @@
 from abc import ABC, abstractmethod
-from decimal import Decimal
 
-from eth_typing import ChecksumAddress
+from utils.validators import Bytes32, ChecksumAddress, Uint256, Uint8
 
 class IJPYC(ABC):
     """Interface of JPYC contracts."""
@@ -23,7 +22,7 @@ class IJPYC(ABC):
         pass
 
     @abstractmethod
-    def minter_allowance(self, minter: ChecksumAddress) -> Decimal:
+    def minter_allowance(self, minter: ChecksumAddress) -> Uint256:
         """Call `minterAllowance` function.
 
         Args:
@@ -35,7 +34,7 @@ class IJPYC(ABC):
         pass
 
     @abstractmethod
-    def total_supply(self) -> Decimal:
+    def total_supply(self) -> Uint256:
         """Call `totalSupply` function.
 
         Returns:
@@ -44,7 +43,7 @@ class IJPYC(ABC):
         pass
 
     @abstractmethod
-    def balance_of(self, account: ChecksumAddress) -> Decimal:
+    def balance_of(self, account: ChecksumAddress) -> Uint256:
         """Call `balanceOf` function.
 
         Args:
@@ -56,7 +55,7 @@ class IJPYC(ABC):
         pass
 
     @abstractmethod
-    def allowance(self, owner: ChecksumAddress, spender: ChecksumAddress) -> Decimal:
+    def allowance(self, owner: ChecksumAddress, spender: ChecksumAddress) -> Uint256:
         """Call `allowance` function.
 
         Args:
@@ -69,7 +68,7 @@ class IJPYC(ABC):
         pass
 
     @abstractmethod
-    def nonces(self, owner: ChecksumAddress) -> int:
+    def nonces(self, owner: ChecksumAddress) -> Uint256:
         """Call `nonces` function.
 
         Args:
@@ -85,15 +84,15 @@ class IJPYC(ABC):
     ######################
 
     @abstractmethod
-    def configure_minter(self, minter: ChecksumAddress, minter_allowed_amount: Decimal) -> str:
+    def configure_minter(self, minter: ChecksumAddress, minter_allowed_amount: Uint256) -> Bytes32:
         """Call `configureMinter` function.
 
         Args:
             minter (ChecksumAddress): Minter address
-            minter_allowed_amount (Decimal): Minter allowance
+            minter_allowed_amount (Uint256): Minter allowance
 
         Returns:
-            str: Transaction hash
+            Bytes32: Transaction hash
 
         Raises:
             AccountNotInitialized: If account is not initialized
@@ -102,15 +101,15 @@ class IJPYC(ABC):
         pass
 
     @abstractmethod
-    def mint(self, to: ChecksumAddress, amount: Decimal) -> str:
+    def mint(self, to: ChecksumAddress, amount: Uint256) -> Bytes32:
         """Call `mint` function.
 
         Args:
             to (ChecksumAddress): Receiver address
-            amount (Decimal): Amount of tokens to mint
+            amount (Uint256): Amount of tokens to mint
 
         Returns:
-            str: Transaction hash
+            Bytes32: Transaction hash
 
         Raises:
             AccountNotInitialized: If account is not initialized
@@ -119,15 +118,15 @@ class IJPYC(ABC):
         pass
 
     @abstractmethod
-    def transfer(self, to: ChecksumAddress, value: Decimal) -> str:
+    def transfer(self, to: ChecksumAddress, value: Uint256) -> Bytes32:
         """Call `transfer` function.
 
         Args:
             to (ChecksumAddress): Receiver address
-            value (Decimal): Amount of tokens to transfer
+            value (Uint256): Amount of tokens to transfer
 
         Returns:
-            str: Transaction hash
+            Bytes32: Transaction hash
 
         Raises:
             AccountNotInitialized: If account is not initialized
@@ -136,16 +135,16 @@ class IJPYC(ABC):
         pass
 
     @abstractmethod
-    def transfer_from(self, from_: ChecksumAddress, to: ChecksumAddress, value: Decimal) -> str:
+    def transfer_from(self, from_: ChecksumAddress, to: ChecksumAddress, value: Uint256) -> Bytes32:
         """Call `transferFrom` function.
 
         Args:
             from_ (ChecksumAddress): Owner address
             to (ChecksumAddress): Receiver address
-            value (Decimal): Amount of tokens to transfer
+            value (Uint256): Amount of tokens to transfer
 
         Returns:
-            str: Transaction hash
+            Bytes32: Transaction hash
 
         Raises:
             AccountNotInitialized: If account is not initialized
@@ -158,29 +157,29 @@ class IJPYC(ABC):
         self,
         from_: ChecksumAddress,
         to: ChecksumAddress,
-        value: Decimal,
-        valid_after: int,
-        valid_before: int,
-        nonce: str,
-        v: int,
-        r: str,
-        s: str,
-    ) -> str:
+        value: Uint256,
+        valid_after: Uint256,
+        valid_before: Uint256,
+        nonce: Bytes32,
+        v: Uint8,
+        r: Bytes32,
+        s: Bytes32,
+    ) -> Bytes32:
         """Call `transferWithAuthorization` function.
 
         Args:
             from_ (ChecksumAddress): Owner address
             to (ChecksumAddress): Receiver allowance
-            value (Decimal): Amount of tokens to transfer
-            valid_after (int): Unix time when transaction becomes valid
-            valid_before (int): Unix time when transaction becomes invalid
-            nonce (str): Unique nonce
-            v (int): v of ECDSA
-            r (str): r of ECDSA
-            s (str): s of ECDSA
+            value (Uint256): Amount of tokens to transfer
+            valid_after (Uint256): Unix time when transaction becomes valid
+            valid_before (Uint256): Unix time when transaction becomes invalid
+            nonce (Bytes32): Unique nonce
+            v (Uint8): v of ECDSA
+            r (Bytes32): r of ECDSA
+            s (Bytes32): s of ECDSA
 
         Returns:
-            str: Transaction hash
+            Bytes32: Transaction hash
 
         Raises:
             AccountNotInitialized: If account is not initialized
@@ -193,29 +192,29 @@ class IJPYC(ABC):
         self,
         from_: ChecksumAddress,
         to: ChecksumAddress,
-        value: Decimal,
-        valid_after: int,
-        valid_before: int,
-        nonce: str,
-        v: int,
-        r: str,
-        s: str,
-    ) -> str:
+        value: Uint256,
+        valid_after: Uint256,
+        valid_before: Uint256,
+        nonce: Bytes32,
+        v: Uint8,
+        r: Bytes32,
+        s: Bytes32,
+    ) -> Bytes32:
         """Call `receiveWithAuthorization` function.
 
         Args:
             from_ (ChecksumAddress): Owner address
             to (ChecksumAddress): Receiver allowance
-            value (Decimal): Amount of tokens to transfer
-            valid_after (int): Unix time when transaction becomes valid
-            valid_before (int): Unix time when transaction becomes invalid
-            nonce (str): Unique nonce
-            v (int): v of ECDSA
-            r (str): r of ECDSA
-            s (str): s of ECDSA
+            value (Uint256): Amount of tokens to transfer
+            valid_after (Uint256): Unix time when transaction becomes valid
+            valid_before (Uint256): Unix time when transaction becomes invalid
+            nonce (Bytes32): Unique nonce
+            v (Uint8): v of ECDSA
+            r (Bytes32): r of ECDSA
+            s (Bytes32): s of ECDSA
 
         Returns:
-            str: Transaction hash
+            Bytes32: Transaction hash
 
         Raises:
             AccountNotInitialized: If account is not initialized
@@ -227,22 +226,22 @@ class IJPYC(ABC):
     def cancel_authorization(
         self,
         authorizer: ChecksumAddress,
-        nonce: str,
-        v: int,
-        r: str,
-        s: str,
-    ) -> str:
+        nonce: Bytes32,
+        v: Uint8,
+        r: Bytes32,
+        s: Bytes32,
+    ) -> Bytes32:
         """Call `cancelAuthorization` function.
 
         Args:
             authorizer (ChecksumAddress): Owner address
-            nonce (str): Unique nonce
-            v (int): v of ECDSA
-            r (str): r of ECDSA
-            s (str): s of ECDSA
+            nonce (Bytes32): Unique nonce
+            v (Uint8): v of ECDSA
+            r (Bytes32): r of ECDSA
+            s (Bytes32): s of ECDSA
 
         Returns:
-            str: Transaction hash
+            Bytes32: Transaction hash
 
         Raises:
             AccountNotInitialized: If account is not initialized
@@ -251,15 +250,15 @@ class IJPYC(ABC):
         pass
 
     @abstractmethod
-    def approve(self, spender: ChecksumAddress, value: Decimal) -> str:
+    def approve(self, spender: ChecksumAddress, value: Uint256) -> Bytes32:
         """Call `approve` function.
 
         Args:
             spender (ChecksumAddress): Spender address
-            value (Decimal): Amount of allowance
+            value (Uint256): Amount of allowance
 
         Returns:
-            str: Transaction hash
+            Bytes32: Transaction hash
 
         Raises:
             AccountNotInitialized: If account is not initialized
@@ -268,15 +267,15 @@ class IJPYC(ABC):
         pass
 
     @abstractmethod
-    def increase_allowance(self, spender: ChecksumAddress, increment: Decimal) -> str:
+    def increase_allowance(self, spender: ChecksumAddress, increment: Uint256) -> Bytes32:
         """Call `increaseAllowance` function.
 
         Args:
             spender (ChecksumAddress): Spender address
-            increment (Decimal): Amount of allowance to increase
+            increment (Uint256): Amount of allowance to increase
 
         Returns:
-            str: Transaction hash
+            Bytes32: Transaction hash
 
         Raises:
             AccountNotInitialized: If account is not initialized
@@ -285,15 +284,15 @@ class IJPYC(ABC):
         pass
 
     @abstractmethod
-    def decrease_allowance(self, spender: ChecksumAddress, decrement: Decimal) -> str:
+    def decrease_allowance(self, spender: ChecksumAddress, decrement: Uint256) -> Bytes32:
         """Call `decreaseAllowance` function.
 
         Args:
             spender (ChecksumAddress): Spender address
-            decrement (Decimal): Amount of allowance to decrease
+            decrement (Uint256): Amount of allowance to decrease
 
         Returns:
-            str: Transaction hash
+            Bytes32: Transaction hash
 
         Raises:
             AccountNotInitialized: If account is not initialized
@@ -306,25 +305,25 @@ class IJPYC(ABC):
         self,
         owner: ChecksumAddress,
         spender: ChecksumAddress,
-        value: Decimal,
-        deadline: int,
-        v: int,
-        r: str,
-        s: str,
-    ) -> str:
+        value: Uint256,
+        deadline: Uint256,
+        v: Uint8,
+        r: Bytes32,
+        s: Bytes32,
+    ) -> Bytes32:
         """Call `permit` function.
 
         Args:
             owner (ChecksumAddress): Owner address
             spender (ChecksumAddress): Spender address
-            value (Decimal): Amount of allowance
-            deadline (int): Unix time when transaction becomes invalid
-            v (int): v of ECDSA
-            r (str): r of ECDSA
-            s (str): s of ECDSA
+            value (Uint256): Amount of allowance
+            deadline (Uint256): Unix time when transaction becomes invalid
+            v (Uint8): v of ECDSA
+            r (Bytes32): r of ECDSA
+            s (Bytes32): s of ECDSA
 
         Returns:
-            str: Transaction hash
+            Bytes32: Transaction hash
 
         Raises:
             AccountNotInitialized: If account is not initialized

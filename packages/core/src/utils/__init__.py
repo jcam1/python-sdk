@@ -6,6 +6,7 @@ from .addresses import get_proxy_address
 from .chains import (
     enumerate_supported_networks,
     get_default_rpc_endpoint,
+    SUPPORTED_CHAINS,
 )
 from .constants import (
     POA_MIDDLEWARE,
@@ -49,6 +50,7 @@ __all__ = [
     # chains
     "enumerate_supported_networks",
     "get_default_rpc_endpoint",
+    "SUPPORTED_CHAINS",
     # constants
     "POA_MIDDLEWARE",
     "SIGN_MIDDLEWARE",
