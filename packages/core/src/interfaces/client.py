@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 from eth_account.signers.local import LocalAccount
 from web3 import Web3
 
-from utils.validators import (
+from ..utils.validators import (
     Bytes32,
     ChecksumAddress,
     RpcEndpoint,

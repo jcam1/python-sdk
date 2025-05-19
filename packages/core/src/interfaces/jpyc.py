@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from utils.validators import (
+from ..utils.validators import (
     Bytes32,
     ChecksumAddress,
     Uint256,

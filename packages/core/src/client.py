@@ -6,14 +6,14 @@ from web3.middleware import (
     SignAndSendRawMiddlewareBuilder,
 )
 
-from interfaces import ISdkClient
-from utils.chains import get_default_rpc_endpoint
-from utils.constants import (
+from .interfaces import ISdkClient
+from .utils.chains import get_default_rpc_endpoint
+from .utils.constants import (
     POA_MIDDLEWARE,
     SIGN_MIDDLEWARE,
 )
-from utils.errors import AccountNotInitialized
-from utils.validators import (
+from .utils.errors import AccountNotInitialized
+from .utils.validators import (
     Bytes32,
     ChecksumAddress,
     RpcEndpoint,
@@ -83,6 +83,7 @@ class SdkClient(ISdkClient):
             layer=0,
         )
         if account is not None:
+            w3.eth.default_account = account.address
             w3.middleware_onion.inject(
                 SignAndSendRawMiddlewareBuilder.build(account),
                 name=SIGN_MIDDLEWARE,

@@ -2,7 +2,7 @@ from decimal import Decimal
 
 from web3 import Web3
 
-from utils.validators import Uint256
+from .validators import Uint256
 
 def remove_decimals(value: Uint256 | Decimal) -> Uint256:
     """Remove decimals.

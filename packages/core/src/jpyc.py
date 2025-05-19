@@ -1,29 +1,30 @@
 from typing import Any
 
+from eth_typing import ChecksumAddress as EthChecksumAddress
 from pydantic import validate_call
-from web3.contract.contract import ContractFunction
+from web3.contract.contract import Contract, ContractFunction
 
-from interfaces import IJPYC, ISdkClient
-from utils.addresses import (
+from .interfaces import IJPYC, ISdkClient
+from .utils.addresses import (
     get_proxy_address,
 )
-from utils.artifacts import (
+from .utils.artifacts import (
     get_artifacts,
     resolve_artifacts_file_path,
 )
-from utils.chains import SUPPORTED_CHAINS
-from utils.constants import SIGN_MIDDLEWARE
-from utils.currencies import (
+from .utils.chains import SUPPORTED_CHAINS
+from .utils.constants import SIGN_MIDDLEWARE
+from .utils.currencies import (
     remove_decimals,
     restore_decimals,
 )
-from utils.errors import (
+from .utils.errors import (
     AccountNotInitialized,
     TransactionFailed,
     TransactionSimulationFailed,
 )
-from utils.types import ContractVersion
-from utils.validators import Bytes32, ChecksumAddress, Uint256, Uint8
+from .utils.types import ContractVersion
+from .utils.validators import Bytes32, ChecksumAddress, Uint256, Uint8
 
 class JPYC(IJPYC):
     """Implementation of IJPYC."""
@@ -32,19 +33,22 @@ class JPYC(IJPYC):
         self,
         client: ISdkClient,
         contract_version: ContractVersion = "2",
+        contract_address: EthChecksumAddress | None = None,
     ):
         """Constructor that initializes JPYC client.
 
         Notes:
-            If `client` parameter is configured to use localhost network,\
+            - If `client` parameter is configured to use localhost network,\
             this deploys JPYC contracts to localhost network, initializes it,\
             and sets its address to `address` attribute.
+            - If `contract_address` is supplied, this configures contract instance with that address.
 
         Args:
             client (ISdkClient): Configured SDK client
             contract_version (ContractVersion): Contract version
+            contract_address (EthChecksumAddress, optional): Contract address
         """
-        if (client.w3.eth.chain_id == SUPPORTED_CHAINS["localhost"]["devnet"]["id"]):
+        if (client.w3.eth.chain_id == SUPPORTED_CHAINS["localhost"]["devnet"]["id"] and contract_address is None):
             address = self.__deploy_contract(
                 client=client,
                 contract_version=contract_version,
@@ -67,7 +71,10 @@ class JPYC(IJPYC):
                 owner_address,
             ).transact()
         else:
-            address = get_proxy_address(contract_version=contract_version)
+            address = (
+                contract_address if contract_address is not None
+                else get_proxy_address(contract_version=contract_version)
+            )
             contract = self.__get_contract(
                 client=client,
                 contract_address=address,
@@ -115,7 +122,7 @@ class JPYC(IJPYC):
         client: ISdkClient,
         contract_address: ChecksumAddress,
         contract_version: ContractVersion = "2",
-    ) -> ChecksumAddress:
+    ) -> Contract:
         """Get contract instance from the configured network.
 
         Args:
@@ -124,7 +131,7 @@ class JPYC(IJPYC):
             contract_version (ContractVersion): Contract version
 
         Returns:
-            ChecksumAddress: Address of the deployed contracts
+            Contract: Address of the deployed contracts
         """
         return client.w3.eth.contract(
             address=contract_address,
