@@ -82,6 +82,16 @@ class InvalidBytes32(JpycSdkError, TypeError):
             message=f"Invalid bytes32: {message_}.",
         )
 
+class InvalidRpcEndpoint(JpycSdkError, TypeError):
+    """Raised when the given string is not a valid RPC endpoint."""
+    code = 204
+
+    def __init__(self, message_: str):
+        super().__init__(
+            code=InvalidRpcEndpoint.code,
+            message=f"Invalid RPC endpoint: {message_}.",
+        )
+
 ######################
 # Transaction Errors #
 ######################

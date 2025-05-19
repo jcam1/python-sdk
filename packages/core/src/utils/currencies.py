@@ -2,14 +2,16 @@ from decimal import Decimal
 
 from web3 import Web3
 
-def remove_decimals(value: Decimal) -> int:
+from utils.validators import Uint256
+
+def remove_decimals(value: Uint256 | Decimal) -> Uint256:
     """Remove decimals.
 
     Args:
-        value (Decimal): Decimal value
+        value (Uint256 | Decimal): Value in ether
 
     Returns:
-        int: Value in wei
+        Uint256: Value in wei
     """
     return Web3.to_wei(value, 'ether')
 

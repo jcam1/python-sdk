@@ -20,10 +20,13 @@ class NetworkMetadata(TypedDict):
     rpc_endpoints: List[str]
 
 ChainMetadata: TypeAlias = dict[ChainName, dict[str, NetworkMetadata]]
+"""A type that contains metadata of chains."""
 
 #############
 # Contracts #
 #############
 
 ContractVersion: TypeAlias = Literal["2"]
+"""A type that contains available contract versions."""
 ArtifactType: TypeAlias = Literal["abi", "bytecode"]
+"""A type that contains types of contract artifacts."""

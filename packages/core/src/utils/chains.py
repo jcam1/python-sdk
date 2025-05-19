@@ -2,6 +2,7 @@ from typing import Final
 
 from .errors import NetworkNotSupported
 from .types import ChainMetadata
+from .validators import RpcEndpoint
 
 ##################
 # Chain Metadata #
@@ -104,7 +105,7 @@ def is_supported_network(chain_name: str, network_name: str) -> bool:
     """
     return chain_name in SUPPORTED_CHAINS and network_name in SUPPORTED_CHAINS[chain_name]
 
-def get_default_rpc_endpoint(chain_name: str, network_name: str) -> str:
+def get_default_rpc_endpoint(chain_name: str, network_name: str) -> RpcEndpoint:
     """Get the default RPC endpoint for the specified network.
 
     Args:
@@ -112,7 +113,7 @@ def get_default_rpc_endpoint(chain_name: str, network_name: str) -> str:
         network_name (str): Network name
 
     Returns:
-        str: RPC endpoint
+        RpcEndpoint: RPC endpoint
 
     Raises:
         NetworkNotSupported: If the specified network is not supported by the SDK

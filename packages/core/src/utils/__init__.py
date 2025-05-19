@@ -1,8 +1,8 @@
+from .addresses import get_proxy_address
 from .artifacts import (
     get_artifacts,
     resolve_artifacts_file_path,
 )
-from .addresses import get_proxy_address
 from .chains import (
     enumerate_supported_networks,
     get_default_rpc_endpoint,
@@ -37,16 +37,17 @@ from .types import (
 from .validators import (
     Bytes32,
     ChecksumAddress,
+    RpcEndpoint,
     Uint256,
     Uint8,
 )
 
 __all__ = [
-    # contract artifacts
-    "get_artifacts",
-    "resolve_artifacts_file_path",
     # addresses
     "get_proxy_address",
+    # artifacts
+    "get_artifacts",
+    "resolve_artifacts_file_path",
     # chains
     "enumerate_supported_networks",
     "get_default_rpc_endpoint",
@@ -76,6 +77,7 @@ __all__ = [
     # validators
     "Bytes32",
     "ChecksumAddress",
+    "RpcEndpoint",
     "Uint256",
     "Uint8",
 ]

@@ -7,6 +7,7 @@ from .constants import UINT256_MAX, UINT8_MAX, UINT_MIN
 from .errors import (
     InvalidBytes32,
     InvalidChecksumAddress,
+    InvalidRpcEndpoint,
     InvalidUint8,
     InvalidUint256,
 )
@@ -84,7 +85,8 @@ def validate_bytes32(string: str) -> str:
         InvalidBytes32: If the string is not a valid bytes32
     """
     try:
-        assert len(bytes.fromhex(string)) == 32
+        assert string[:2] == "0x"
+        assert len(bytes.fromhex(string[2:])) == 32
     except Exception:
         raise InvalidBytes32(string)
 
@@ -92,3 +94,25 @@ def validate_bytes32(string: str) -> str:
 
 Bytes32 = Annotated[str, AfterValidator(validate_bytes32)]
 """A type that contains a bytes32."""
+
+def validate_rpc_endpoint(string: str) -> str:
+    """Checks if the given string is a valid RPC endpoint.
+
+    Args:
+        string (str): String
+
+    Returns:
+        str: String
+
+    Raises:
+        InvalidRpcEndpoint: If the string is not a valid RPC endpoint
+    """
+    try:
+        assert string.startswith(("http")) == True
+    except Exception:
+        raise InvalidRpcEndpoint(string)
+
+    return string
+
+RpcEndpoint = Annotated[str, AfterValidator(validate_rpc_endpoint)]
+"""A type that contains a rpc endpoint."""
