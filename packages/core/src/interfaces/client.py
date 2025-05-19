@@ -3,6 +3,12 @@ from abc import ABC, abstractmethod
 from eth_account.signers.local import LocalAccount
 from web3 import Web3
 
+from utils.validators import (
+    Bytes32,
+    ChecksumAddress,
+    RpcEndpoint,
+)
+
 class ISdkClient(ABC):
     """Interface of SDK client."""
 
@@ -23,39 +29,45 @@ class ISdkClient(ABC):
         pass
 
     @abstractmethod
-    def set_custom_provider(self, rpc_endpoint: str) -> Web3:
+    def set_custom_provider(self, rpc_endpoint: RpcEndpoint) -> Web3:
         """Set provider using a custom RPC endpoint.
 
         Args:
-            rpc_endpoint (str): Custom RPC endpoint
+            rpc_endpoint (RpcEndpoint): Custom RPC endpoint
 
         Returns:
             Web3: Configured web3 instance
+
+        Raises:
+            InvalidRpcEndpoint: If the supplied `rpc_endpoint` is not in a valid form
         """
         pass
 
     @abstractmethod
-    def set_account(self, private_key: str | None) -> LocalAccount | None:
-        """Set account with private key.
+    def set_account(self, private_key: Bytes32 | None) -> LocalAccount | None:
+        """Set account with a private key.
 
         Notes:
             If `private_key` parameter is set to `None`, \
             this method removes `account` from the configured web3 instance.
 
         Args:
-            private_key (str, optional): Private key of account
+            private_key (Bytes32, optional): Private key of account
 
         Returns:
-            LocalAccount | None: Configured account
+            LocalAccount | None: Configured account instance
+
+        Raises:
+            InvalidBytes32: If the supplied `private_key` is not in a valid form
         """
         pass
 
     @abstractmethod
-    def get_account_address(self) -> str:
+    def get_account_address(self) -> ChecksumAddress:
         """Get address of the configured account.
 
         Returns:
-            str: Public address of account
+            ChecksumAddress: Public address of account
 
         Raises:
             AccountNotInitialized: If account is not initialized

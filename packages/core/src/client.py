@@ -1,4 +1,5 @@
 from eth_account.signers.local import LocalAccount
+from pydantic import validate_call
 from web3 import Account, HTTPProvider, Web3
 from web3.middleware import (
     ExtraDataToPOAMiddleware,
@@ -12,16 +13,22 @@ from utils.constants import (
     SIGN_MIDDLEWARE,
 )
 from utils.errors import AccountNotInitialized
+from utils.validators import (
+    Bytes32,
+    ChecksumAddress,
+    RpcEndpoint,
+)
 
 class SdkClient(ISdkClient):
     """SDK client."""
 
+    @validate_call
     def __init__(
         self,
         chain_name: str | None = None,
         network_name: str | None = None,
-        rpc_endpoint: str | None = None,
-        private_key: str | None = None,
+        rpc_endpoint: RpcEndpoint | None = None,
+        private_key: Bytes32 | None = None,
     ):
         """Constructor that initializes SDK client.
 
@@ -33,10 +40,12 @@ class SdkClient(ISdkClient):
         Args:
             chain_name (str, optional): Chain name
             network_name (str, optional): Network name
-            rpc_endpoint (str, optional): RPC endpoint
-            private_key (str, optional): private key of EOA
+            rpc_endpoint (RpcEndpoint, optional): RPC endpoint
+            private_key (Bytes32, optional): private key of EOA
 
         Raises:
+            InvalidBytes32: If the supplied `private_key` is not in a valid form
+            InvalidRpcEndpoint: If the supplied `rpc_endpoint` is not in a valid form
             NetworkNotSupported: If the specified network is not supported by the SDK
         """
         rpc_endpoint = rpc_endpoint if rpc_endpoint is not None else get_default_rpc_endpoint(chain_name, network_name)
@@ -55,13 +64,13 @@ class SdkClient(ISdkClient):
 
     @staticmethod
     def __configure_w3(
-            rpc_endpoint: str,
+            rpc_endpoint: RpcEndpoint,
             account: LocalAccount | None = None,
         ) -> Web3:
         """Configure a web3 instance.
 
         Args:
-            rpc_endpoint (str): RPC endpoint
+            rpc_endpoint (RpcEndpoint): RPC endpoint
             account (LocalAccount, optional): Account instance
 
         Returns:
@@ -90,7 +99,8 @@ class SdkClient(ISdkClient):
 
         return self.w3
 
-    def set_custom_provider(self, rpc_endpoint: str) -> Web3:
+    @validate_call
+    def set_custom_provider(self, rpc_endpoint: RpcEndpoint) -> Web3:
         self.w3 = self.__configure_w3(
             rpc_endpoint=rpc_endpoint,
             account=self.account
@@ -98,7 +108,8 @@ class SdkClient(ISdkClient):
 
         return self.w3
 
-    def set_account(self, private_key: str | None) -> LocalAccount | None:
+    @validate_call
+    def set_account(self, private_key: Bytes32 | None) -> LocalAccount | None:
         if private_key is None:
             self.account = None
             self.w3 = self.__configure_w3(
@@ -113,7 +124,7 @@ class SdkClient(ISdkClient):
 
         return self.account
 
-    def get_account_address(self) -> str:
+    def get_account_address(self) -> ChecksumAddress:
         if self.account is None:
             raise AccountNotInitialized()
 

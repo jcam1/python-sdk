@@ -1,6 +1,11 @@
 from abc import ABC, abstractmethod
 
-from utils.validators import Bytes32, ChecksumAddress, Uint256, Uint8
+from utils.validators import (
+    Bytes32,
+    ChecksumAddress,
+    Uint256,
+    Uint8,
+)
 
 class IJPYC(ABC):
     """Interface of JPYC contracts."""
@@ -18,6 +23,9 @@ class IJPYC(ABC):
 
         Returns:
             bool: True if `account` is a minter, false otherwise
+
+        Raises:
+            InvalidChecksumAddress: If supplied `account` is not in a valid form
         """
         pass
 
@@ -29,7 +37,10 @@ class IJPYC(ABC):
             minter (ChecksumAddress): Minter address
 
         Returns:
-            Decimal: Minter allowance
+            Uint256: Minter allowance
+
+        Raises:
+            InvalidChecksumAddress: If supplied `minter` is not in a valid form
         """
         pass
 
@@ -38,7 +49,7 @@ class IJPYC(ABC):
         """Call `totalSupply` function.
 
         Returns:
-            Decimal: Total supply of tokens
+            Uint256: Total supply of tokens
         """
         pass
 
@@ -50,7 +61,10 @@ class IJPYC(ABC):
             account (ChecksumAddress): Account address
 
         Returns:
-            Decimal: Account balance
+            Uint256: Account balance
+
+        Raises:
+            InvalidChecksumAddress: If supplied `account` is not in a valid form
         """
         pass
 
@@ -63,7 +77,10 @@ class IJPYC(ABC):
             spender (ChecksumAddress): Spender address
 
         Returns:
-            Decimal: Allowance of spender over owner's tokens
+            Uint256: Allowance of spender over owner's tokens
+
+        Raises:
+            InvalidChecksumAddress: If supplied `owner` or `spender` is not in a valid form
         """
         pass
 
@@ -75,7 +92,10 @@ class IJPYC(ABC):
             owner (ChecksumAddress): Owner address
 
         Returns:
-            int: Nonce for EIP2612's `permit`.
+            Uint256: Nonce for EIP2612's `permit`.
+
+        Raises:
+            InvalidChecksumAddress: If supplied `owner` is not in a valid form
         """
         pass
 
@@ -96,7 +116,10 @@ class IJPYC(ABC):
 
         Raises:
             AccountNotInitialized: If account is not initialized
-            TransactionFailedToSend: If failed to send a transaction
+            InvalidChecksumAddress: If supplied `minter` is not in a valid form
+            InvalidUint256: If supplied `minter_allowed_amount` is not in a valid form
+            TransactionFailed: If transaction fails
+            TransactionSimulationFailed: If transaction simulation fails
         """
         pass
 
@@ -113,7 +136,10 @@ class IJPYC(ABC):
 
         Raises:
             AccountNotInitialized: If account is not initialized
-            TransactionFailedToSend: If failed to send a transaction
+            InvalidChecksumAddress: If supplied `to` is not in a valid form
+            InvalidUint256: If supplied `amount` is not in a valid form
+            TransactionFailed: If transaction fails
+            TransactionSimulationFailed: If transaction simulation fails
         """
         pass
 
@@ -130,7 +156,10 @@ class IJPYC(ABC):
 
         Raises:
             AccountNotInitialized: If account is not initialized
-            TransactionFailedToSend: If failed to send a transaction
+            InvalidChecksumAddress: If supplied `to` is not in a valid form
+            InvalidUint256: If supplied `value` is not in a valid form
+            TransactionFailed: If transaction fails
+            TransactionSimulationFailed: If transaction simulation fails
         """
         pass
 
@@ -148,7 +177,10 @@ class IJPYC(ABC):
 
         Raises:
             AccountNotInitialized: If account is not initialized
-            TransactionFailedToSend: If failed to send a transaction
+            InvalidChecksumAddress: If supplied `from_` or `to` is not in a valid form
+            InvalidUint256: If supplied `value` is not in a valid form
+            TransactionFailed: If transaction fails
+            TransactionSimulationFailed: If transaction simulation fails
         """
         pass
 
@@ -183,7 +215,12 @@ class IJPYC(ABC):
 
         Raises:
             AccountNotInitialized: If account is not initialized
-            TransactionFailedToSend: If failed to send a transaction
+            InvalidBytes32: If supplied `nonce` or `r` or `s` is not in a valid form
+            InvalidChecksumAddress: If supplied `from_` or `to` is not in a valid form
+            InvalidUint256: If supplied `value` or `valid_after` or `valid_before` is not in a valid form
+            InvalidUint8: If supplied `v` is not in a valid form
+            TransactionFailed: If transaction fails
+            TransactionSimulationFailed: If transaction simulation fails
         """
         pass
 
@@ -218,7 +255,12 @@ class IJPYC(ABC):
 
         Raises:
             AccountNotInitialized: If account is not initialized
-            TransactionFailedToSend: If failed to send a transaction
+            InvalidBytes32: If supplied `nonce` or `r` or `s` is not in a valid form
+            InvalidChecksumAddress: If supplied `from_` or `to` is not in a valid form
+            InvalidUint256: If supplied `value` or `valid_after` or `valid_before` is not in a valid form
+            InvalidUint8: If supplied `v` is not in a valid form
+            TransactionFailed: If transaction fails
+            TransactionSimulationFailed: If transaction simulation fails
         """
         pass
 
@@ -245,7 +287,11 @@ class IJPYC(ABC):
 
         Raises:
             AccountNotInitialized: If account is not initialized
-            TransactionFailedToSend: If failed to send a transaction
+            InvalidBytes32: If supplied `nonce` or `r` or `s` is not in a valid form
+            InvalidChecksumAddress: If supplied `authorizer` is not in a valid form
+            InvalidUint8: If supplied `v` is not in a valid form
+            TransactionFailed: If transaction fails
+            TransactionSimulationFailed: If transaction simulation fails
         """
         pass
 
@@ -262,7 +308,10 @@ class IJPYC(ABC):
 
         Raises:
             AccountNotInitialized: If account is not initialized
-            TransactionFailedToSend: If failed to send a transaction
+            InvalidChecksumAddress: If supplied `spender` is not in a valid form
+            InvalidUint256: If supplied `value` is not in a valid form
+            TransactionFailed: If transaction fails
+            TransactionSimulationFailed: If transaction simulation fails
         """
         pass
 
@@ -279,7 +328,10 @@ class IJPYC(ABC):
 
         Raises:
             AccountNotInitialized: If account is not initialized
-            TransactionFailedToSend: If failed to send a transaction
+            InvalidChecksumAddress: If supplied `spender` is not in a valid form
+            InvalidUint256: If supplied `increment` is not in a valid form
+            TransactionFailed: If transaction fails
+            TransactionSimulationFailed: If transaction simulation fails
         """
         pass
 
@@ -296,7 +348,10 @@ class IJPYC(ABC):
 
         Raises:
             AccountNotInitialized: If account is not initialized
-            TransactionFailedToSend: If failed to send a transaction
+            InvalidChecksumAddress: If supplied `spender` is not in a valid form
+            InvalidUint256: If supplied `decrement` is not in a valid form
+            TransactionFailed: If transaction fails
+            TransactionSimulationFailed: If transaction simulation fails
         """
         pass
 
@@ -327,6 +382,11 @@ class IJPYC(ABC):
 
         Raises:
             AccountNotInitialized: If account is not initialized
-            TransactionFailedToSend: If failed to send a transaction
+            InvalidBytes32: If supplied `r` or `s` is not in a valid form
+            InvalidChecksumAddress: If supplied `owner` or `spender` is not in a valid form
+            InvalidUint256: If supplied `value` or `deadline` is not in a valid form
+            InvalidUint8: If supplied `v` is not in a valid form
+            TransactionFailed: If transaction fails
+            TransactionSimulationFailed: If transaction simulation fails
         """
         pass

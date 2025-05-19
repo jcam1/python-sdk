@@ -203,7 +203,7 @@ class JPYC(IJPYC):
         Raises:
             AccountNotInitialized: If account is not initialized
             TransactionSimulationFailed: If transaction simulation fails
-            TransactionFailedToSend: If transaction fails
+            TransactionFailed: If transaction fails
         """
 
         self.__account_initialized()
