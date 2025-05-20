@@ -50,7 +50,7 @@ def validate_uint8(integer: int) -> int:
         InvalidUint8: If the integer is not a valid uint8
     """
     if integer < UINT_MIN or UINT8_MAX < integer:
-        raise InvalidUint8(integer)
+        raise InvalidUint8(str(integer))
 
     return integer
 
@@ -72,7 +72,7 @@ def validate_uint256(integer: int) -> int:
         InvalidUint256: If the integer is not a valid uint256
     """
     if integer < UINT_MIN or UINT256_MAX < integer:
-        raise InvalidUint256(integer)
+        raise InvalidUint256(str(integer))
 
     return integer
 

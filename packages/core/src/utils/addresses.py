@@ -55,8 +55,6 @@ def get_proxy_address(contract_version: ContractVersion) -> ChecksumAddress:
     match contract_version:
         case "2":
             return V2_PROXY_ADDRESS
-        case _:
-            return V2_PROXY_ADDRESS
 
 
 ######################

@@ -1,7 +1,10 @@
+from .types import ChainName
+
+
 class JpycSdkError(Exception):
     """A base class for any errors related to JPYC SDK."""
 
-    def __init__(self, code: int, message: str):
+    def __init__(self, code: int, message: str) -> None:
         self.code = code
         """int: Custom error code"""
         self.message = message
@@ -24,7 +27,7 @@ class NetworkNotSupported(JpycSdkError):
 
     code = 100
 
-    def __init__(self, chain_name: str, network_name: str):
+    def __init__(self, chain_name: ChainName, network_name: str) -> None:
         from .chains import enumerate_supported_networks
 
         super().__init__(
@@ -39,7 +42,7 @@ class AccountNotInitialized(JpycSdkError):
 
     code = 101
 
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__(
             code=AccountNotInitialized.code,
             message="Account is not initialized.",
@@ -54,7 +57,7 @@ class InvalidChecksumAddress(JpycSdkError, TypeError):
 
     code = 200
 
-    def __init__(self, message_: str):
+    def __init__(self, message_: str) -> None:
         super().__init__(
             code=InvalidChecksumAddress.code,
             message=f"Invalid checksum address: {message_}. "
@@ -67,7 +70,7 @@ class InvalidUint8(JpycSdkError, TypeError):
 
     code = 201
 
-    def __init__(self, message_: str):
+    def __init__(self, message_: str) -> None:
         super().__init__(
             code=InvalidUint8.code,
             message=f"Invalid uint8: {message_}. Integer must be between 0 ~ 2^8 - 1.",
@@ -79,7 +82,7 @@ class InvalidUint256(JpycSdkError, TypeError):
 
     code = 202
 
-    def __init__(self, message_: str):
+    def __init__(self, message_: str) -> None:
         super().__init__(
             code=InvalidUint256.code,
             message=f"Invalid uint256: {message_}. "
@@ -92,7 +95,7 @@ class InvalidBytes32(JpycSdkError, TypeError):
 
     code = 203
 
-    def __init__(self, message_: str):
+    def __init__(self, message_: str) -> None:
         super().__init__(
             code=InvalidBytes32.code,
             message=f"Invalid bytes32: {message_}.",
@@ -104,7 +107,7 @@ class InvalidRpcEndpoint(JpycSdkError, TypeError):
 
     code = 204
 
-    def __init__(self, message_: str):
+    def __init__(self, message_: str) -> None:
         super().__init__(
             code=InvalidRpcEndpoint.code,
             message=f"Invalid RPC endpoint: {message_}.",
@@ -125,7 +128,7 @@ class TransactionSimulationFailed(JpycSdkError):
 
     code = 300
 
-    def __init__(self, message_: str):
+    def __init__(self, message_: str) -> None:
         super().__init__(
             code=TransactionSimulationFailed.code,
             message=f"Failed to simulate a transaction locally: {message_}",
@@ -141,7 +144,7 @@ class TransactionFailed(JpycSdkError):
 
     code = 301
 
-    def __init__(self, message_: str):
+    def __init__(self, message_: str) -> None:
         super().__init__(
             code=TransactionFailed.code,
             message=f"Transaction failed: {message_}",

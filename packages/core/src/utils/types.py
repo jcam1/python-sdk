@@ -1,17 +1,19 @@
-from typing import Literal, TypeAlias, TypedDict
+from typing import Literal, TypedDict
+
+from web3.contract.contract import ContractFunction
 
 ##########
 # Chains #
 ##########
 
-ChainName: TypeAlias = Literal[
+type ChainName = Literal[
     "ethereum",
     "polygon",
     "gnosis",
     "avalanche",
     "astar",
     "shiden",
-    "local",
+    "localhost",
 ]
 
 
@@ -21,14 +23,23 @@ class NetworkMetadata(TypedDict):
     rpc_endpoints: list[str]
 
 
-ChainMetadata: TypeAlias = dict[ChainName, dict[str, NetworkMetadata]]
+type ChainMetadata = dict[ChainName, dict[str, NetworkMetadata]]
 """A type that contains metadata of chains."""
 
 #############
 # Contracts #
 #############
 
-ContractVersion: TypeAlias = Literal["2"]
+type ContractVersion = Literal["2"]
 """A type that contains available contract versions."""
-ArtifactType: TypeAlias = Literal["abi", "bytecode"]
+type ArtifactType = Literal["abi", "bytecode"]
 """A type that contains types of contract artifacts."""
+
+################
+# Transactions #
+################
+
+
+class TransactionArgs(TypedDict):
+    contract_func: ContractFunction
+    func_args: dict[str, object]

@@ -17,10 +17,10 @@ def remove_decimals(value: Uint256 | Decimal) -> Uint256:
     return Web3.to_wei(value, "ether")
 
 
-def restore_decimals(func):
+def restore_decimals(func):  # type: ignore[no-untyped-def]
     """Decorator to restore decimals."""
 
-    def wrapper(*args, **kwargs):
+    def wrapper(*args, **kwargs):  # type: ignore[no-untyped-def]
         result = func(*args, **kwargs)
         return Web3.from_wei(result, "ether")
 

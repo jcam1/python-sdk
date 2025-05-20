@@ -13,6 +13,7 @@ from .utils.constants import (
     SIGN_MIDDLEWARE,
 )
 from .utils.errors import AccountNotInitialized
+from .utils.types import ChainName
 from .utils.validators import (
     Bytes32,
     ChecksumAddress,
@@ -26,11 +27,11 @@ class SdkClient(ISdkClient):
     @validate_call
     def __init__(
         self,
-        chain_name: str | None = None,
+        chain_name: ChainName | None = None,
         network_name: str | None = None,
         rpc_endpoint: RpcEndpoint | None = None,
         private_key: Bytes32 | None = None,
-    ):
+    ) -> None:
         """Constructor that initializes SDK client.
 
         Notes:
@@ -98,7 +99,7 @@ class SdkClient(ISdkClient):
 
         return w3
 
-    def set_default_provider(self, chain_name: str, network_name: str) -> Web3:
+    def set_default_provider(self, chain_name: ChainName, network_name: str) -> Web3:
         self.w3 = self.__configure_w3(
             rpc_endpoint=get_default_rpc_endpoint(chain_name, network_name),
             account=self.account,

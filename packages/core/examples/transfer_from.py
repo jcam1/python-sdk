@@ -7,7 +7,7 @@ from examples.constants import KNOWN_ACCOUNTS
 from examples.main import jpyc_0, jpyc_1
 
 
-def main():
+def main() -> None:
     # 0. Configure a minter
     jpyc_0.configure_minter(
         minter=KNOWN_ACCOUNTS[0].address,

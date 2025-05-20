@@ -3,6 +3,7 @@ from abc import ABC, abstractmethod
 from eth_account.signers.local import LocalAccount
 from web3 import Web3
 
+from ..utils.types import ChainName
 from ..utils.validators import (
     Bytes32,
     ChecksumAddress,
@@ -14,7 +15,7 @@ class ISdkClient(ABC):
     """Interface of SDK client."""
 
     @abstractmethod
-    def set_default_provider(self, chain_name: str, network_name: str) -> Web3:
+    def set_default_provider(self, chain_name: ChainName, network_name: str) -> Web3:
         """Set provider using one of the default RPC endpoints.
 
         Args:

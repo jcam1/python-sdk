@@ -1,7 +1,7 @@
 from typing import Final
 
 from .errors import NetworkNotSupported
-from .types import ChainMetadata
+from .types import ChainMetadata, ChainName
 from .validators import RpcEndpoint
 
 ##################
@@ -98,12 +98,14 @@ def enumerate_supported_networks() -> str:
     )
 
 
-def is_supported_network(chain_name: str, network_name: str) -> bool:
+def is_supported_network(
+    chain_name: ChainName | None, network_name: str | None
+) -> bool:
     """Check if the specified network is supported by the SDK.
 
     Args:
-        chain_name (str): Chain name
-        network_name (str): Network name
+        chain_name (ChainName, optional): Chain name
+        network_name (str, optional): Network name
 
     Returns:
         bool: True if supported, false otherwise
@@ -113,12 +115,14 @@ def is_supported_network(chain_name: str, network_name: str) -> bool:
     )
 
 
-def get_default_rpc_endpoint(chain_name: str, network_name: str) -> RpcEndpoint:
+def get_default_rpc_endpoint(
+    chain_name: ChainName | None, network_name: str | None
+) -> RpcEndpoint:
     """Get the default RPC endpoint for the specified network.
 
     Args:
-        chain_name (str): Chain name
-        network_name (str): Network name
+        chain_name (ChainName, optional): Chain name
+        network_name (str, optional): Network name
 
     Returns:
         RpcEndpoint: RPC endpoint
@@ -127,6 +131,6 @@ def get_default_rpc_endpoint(chain_name: str, network_name: str) -> RpcEndpoint:
         NetworkNotSupported: If the specified network is not supported by the SDK
     """
     if not is_supported_network(chain_name, network_name):
-        raise NetworkNotSupported(chain_name, network_name)
+        raise NetworkNotSupported(chain_name, network_name)  # type: ignore[arg-type]
 
-    return SUPPORTED_CHAINS[chain_name][network_name]["rpc_endpoints"][0]
+    return SUPPORTED_CHAINS[chain_name][network_name]["rpc_endpoints"][0]  # type: ignore[index]

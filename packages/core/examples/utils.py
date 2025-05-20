@@ -1,7 +1,7 @@
 from web3 import Web3
 
 
-def add_zero_padding_to_hex(hex_string: str, num_of_bytes: int):
+def add_zero_padding_to_hex(hex_string: str, num_of_bytes: int) -> str:
     return f"0x{hex_string[2:].zfill(num_of_bytes * 2)}"
 
 

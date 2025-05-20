@@ -4,7 +4,8 @@ from eth_typing import ChecksumAddress as EthChecksumAddress
 from pydantic import validate_call
 from web3.contract.contract import Contract, ContractFunction
 
-from .interfaces import IJPYC, ISdkClient
+from .client import SdkClient
+from .interfaces import IJPYC
 from .utils.addresses import (
     get_proxy_address,
 )
@@ -23,7 +24,7 @@ from .utils.errors import (
     TransactionFailed,
     TransactionSimulationFailed,
 )
-from .utils.types import ContractVersion
+from .utils.types import ContractVersion, TransactionArgs
 from .utils.validators import Bytes32, ChecksumAddress, Uint8, Uint256
 
 
@@ -32,10 +33,10 @@ class JPYC(IJPYC):
 
     def __init__(
         self,
-        client: ISdkClient,
+        client: SdkClient,
         contract_version: ContractVersion = "2",
         contract_address: EthChecksumAddress | None = None,
-    ):
+    ) -> None:
         """Constructor that initializes JPYC client.
 
         Notes:
@@ -46,7 +47,7 @@ class JPYC(IJPYC):
             this configures contract instance with that address.
 
         Args:
-            client (ISdkClient): Configured SDK client
+            client (SdkClient): Configured SDK client
             contract_version (ContractVersion): Contract version
             contract_address (EthChecksumAddress, optional): Contract address
         """
@@ -98,7 +99,7 @@ class JPYC(IJPYC):
 
     @staticmethod
     def __deploy_contract(
-        client: ISdkClient,
+        client: SdkClient,
         contract_version: ContractVersion = "2",
     ) -> ChecksumAddress:
         """Deploy contracts to the configured network.
@@ -108,7 +109,7 @@ class JPYC(IJPYC):
             Please use this method to deploy contracts to localhost network.
 
         Args:
-            client (ISdkClient): Configured SDK client
+            client (SdkClient): Configured SDK client
             contract_version (ContractVersion): Contract version
 
         Returns:
@@ -121,25 +122,25 @@ class JPYC(IJPYC):
         )
         tx_hash = contract.constructor().transact()
 
-        return client.w3.eth.wait_for_transaction_receipt(tx_hash).contractAddress
+        return client.w3.eth.wait_for_transaction_receipt(tx_hash).contractAddress  # type: ignore[attr-defined]
 
     @staticmethod
     def __get_contract(
-        client: ISdkClient,
+        client: SdkClient,
         contract_address: ChecksumAddress,
         contract_version: ContractVersion = "2",
     ) -> Contract:
         """Get contract instance from the configured network.
 
         Args:
-            client (ISdkClient): Configured SDK client
+            client (SdkClient): Configured SDK client
             contract_address (ChecksumAddress): Contract address
             contract_version (ContractVersion): Contract version
 
         Returns:
             Contract: Address of the deployed contracts
         """
-        return client.w3.eth.contract(
+        return client.w3.eth.contract(  # type: ignore[call-overload]
             address=contract_address,
             abi=get_artifacts(
                 file_path=resolve_artifacts_file_path(
@@ -164,7 +165,7 @@ class JPYC(IJPYC):
     @staticmethod
     def __simulate_transaction(
         contract_func: ContractFunction,
-        func_args: dict[Any],
+        func_args: dict[str, object],
     ) -> None:
         """Simulates a transaction locally.
 
@@ -173,7 +174,7 @@ class JPYC(IJPYC):
 
         Args:
             contract_func (ContractFunction): Contract function
-            func_args (dict[Any]): Arguments of contract function
+            func_args (dict[str, object]): Arguments of contract function
 
         Raises:
             TransactionSimulationFailed: If transaction simulation fails
@@ -181,18 +182,18 @@ class JPYC(IJPYC):
         try:
             contract_func(**func_args).call()
         except Exception as e:
-            raise TransactionSimulationFailed(e)
+            raise TransactionSimulationFailed(str(e))
 
     @staticmethod
     def __send_transaction(
         contract_func: ContractFunction,
-        func_args: dict[Any],
+        func_args: dict[str, object],
     ) -> Any:
         """Sends a transaction to blockchain.
 
         Args:
             contract_func (ContractFunction): Contract function
-            func_args (dict[Any]): Arguments of contract function
+            func_args (dict[str, object]): Arguments of contract function
 
         Returns:
             Any: Response from the contract function
@@ -203,14 +204,16 @@ class JPYC(IJPYC):
         try:
             return contract_func(**func_args).transact()
         except Exception as e:
-            raise TransactionFailed(e)
+            raise TransactionFailed(str(e))
 
-    def __transact(self, contract_func: ContractFunction, func_args: dict[Any]) -> Any:
+    def __transact(
+        self, contract_func: ContractFunction, func_args: dict[str, object]
+    ) -> Any:
         """Helper method to prepare & send a transaction in one method.
 
         Args:
             contract_func (ContractFunction): Contract function
-            func_args (dict[Any]): Arguments of contract function
+            func_args (dict[str, object]): Arguments of contract function
 
         Returns:
             Any: Response from the contract function
@@ -270,7 +273,7 @@ class JPYC(IJPYC):
     def configure_minter(
         self, minter: ChecksumAddress, minter_allowed_amount: Uint256
     ) -> Bytes32:
-        tx_args = {
+        tx_args: TransactionArgs = {
             "contract_func": self.contract.functions.configureMinter,
             "func_args": {
                 "minter": minter,
@@ -282,7 +285,7 @@ class JPYC(IJPYC):
 
     @validate_call
     def mint(self, to: ChecksumAddress, amount: Uint256) -> Bytes32:
-        tx_args = {
+        tx_args: TransactionArgs = {
             "contract_func": self.contract.functions.mint,
             "func_args": {
                 "_to": to,
@@ -294,7 +297,7 @@ class JPYC(IJPYC):
 
     @validate_call
     def transfer(self, to: ChecksumAddress, value: Uint256) -> Bytes32:
-        tx_args = {
+        tx_args: TransactionArgs = {
             "contract_func": self.contract.functions.transfer,
             "func_args": {
                 "to": to,
@@ -308,7 +311,7 @@ class JPYC(IJPYC):
     def transfer_from(
         self, from_: ChecksumAddress, to: ChecksumAddress, value: Uint256
     ) -> Bytes32:
-        tx_args = {
+        tx_args: TransactionArgs = {
             "contract_func": self.contract.functions.transferFrom,
             "func_args": {
                 "from": from_,
@@ -332,7 +335,7 @@ class JPYC(IJPYC):
         r: Bytes32,
         s: Bytes32,
     ) -> Bytes32:
-        tx_args = {
+        tx_args: TransactionArgs = {
             "contract_func": self.contract.functions.transferWithAuthorization,
             "func_args": {
                 "from": from_,
@@ -362,7 +365,7 @@ class JPYC(IJPYC):
         r: Bytes32,
         s: Bytes32,
     ) -> Bytes32:
-        tx_args = {
+        tx_args: TransactionArgs = {
             "contract_func": self.contract.functions.receiveWithAuthorization,
             "func_args": {
                 "from": from_,
@@ -388,7 +391,7 @@ class JPYC(IJPYC):
         r: Bytes32,
         s: Bytes32,
     ) -> Bytes32:
-        tx_args = {
+        tx_args: TransactionArgs = {
             "contract_func": self.contract.functions.cancelAuthorization,
             "func_args": {
                 "authorizer": authorizer,
@@ -403,7 +406,7 @@ class JPYC(IJPYC):
 
     @validate_call
     def approve(self, spender: ChecksumAddress, value: Uint256) -> Bytes32:
-        tx_args = {
+        tx_args: TransactionArgs = {
             "contract_func": self.contract.functions.approve,
             "func_args": {
                 "spender": spender,
@@ -417,7 +420,7 @@ class JPYC(IJPYC):
     def increase_allowance(
         self, spender: ChecksumAddress, increment: Uint256
     ) -> Bytes32:
-        tx_args = {
+        tx_args: TransactionArgs = {
             "contract_func": self.contract.functions.increaseAllowance,
             "func_args": {
                 "spender": spender,
@@ -431,7 +434,7 @@ class JPYC(IJPYC):
     def decrease_allowance(
         self, spender: ChecksumAddress, decrement: Uint256
     ) -> Bytes32:
-        tx_args = {
+        tx_args: TransactionArgs = {
             "contract_func": self.contract.functions.decreaseAllowance,
             "func_args": {
                 "spender": spender,
@@ -452,7 +455,7 @@ class JPYC(IJPYC):
         r: Bytes32,
         s: Bytes32,
     ) -> Bytes32:
-        tx_args = {
+        tx_args: TransactionArgs = {
             "contract_func": self.contract.functions.permit,
             "func_args": {
                 "owner": owner,

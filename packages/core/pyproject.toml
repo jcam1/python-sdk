@@ -1,7 +1,7 @@
 [project]
 name = "jpyc-core-sdk"
 version = "1.0.0"
-requires-python = ">=3.11"
+requires-python = ">=3.12"
 license = "MIT"
 description = "Python SDKs for JPYCv2 contracts"
 readme = "README.md"
@@ -18,7 +18,6 @@ classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
     "Programming Language :: Python :: 3.14",
@@ -61,7 +60,7 @@ dev = [
 # Ruff
 
 [tool.ruff]
-target-version = "py311"
+target-version = "py312"
 line-length = 88
 indent-width = 4
 
@@ -79,3 +78,18 @@ skip-magic-trailing-comma = false
 line-ending = "auto"
 docstring-code-format = true
 docstring-code-line-length = "dynamic"
+
+# mypy
+
+[tool.mypy]
+python_version = "3.12"
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+warn_unreachable = true
+ignore_missing_imports = false

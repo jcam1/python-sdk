@@ -7,7 +7,7 @@ from examples.constants import KNOWN_ACCOUNTS
 from examples.main import jpyc_0
 
 
-def main():
+def main() -> None:
     # 0. Check initial total supply of jpyc tokens
     total_supply = jpyc_0.total_supply()
     print(f"Total Supply (before minting): {total_supply}")

@@ -11,7 +11,7 @@ from examples.main import jpyc_0
 from examples.utils import add_zero_padding_to_hex, remove_decimals
 
 
-def main():
+def main() -> None:
     # 0. Configure a minter
     jpyc_0.configure_minter(
         minter=KNOWN_ACCOUNTS[0].address,

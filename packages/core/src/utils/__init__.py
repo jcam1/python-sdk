@@ -32,6 +32,7 @@ from .errors import (
 from .types import (
     ArtifactType,
     ChainMetadata,
+    ChainName,
     ContractVersion,
 )
 from .validators import (
@@ -73,6 +74,7 @@ __all__ = [
     # types
     "ArtifactType",
     "ChainMetadata",
+    "ChainName",
     "ContractVersion",
     # validators
     "Bytes32",
