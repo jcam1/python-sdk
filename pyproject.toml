@@ -10,3 +10,8 @@ core = { workspace = true }
 
 [tool.uv.workspace]
 members = ["packages/*"]
+
+[dependency-groups]
+dev = [
+    "pre-commit>=4.2.0",
+]
