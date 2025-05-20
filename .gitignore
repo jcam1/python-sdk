@@ -5,5 +5,11 @@ dist
 *.egg-info
 __pycache__
 
+# mypy
+.mypy_cache
+
+# ruff
+.ruff_cache
+
 # misc
 cspell.json
