@@ -9,6 +9,7 @@ sys.path.append(str(Path(__file__).parents[1]))
 
 from examples.constants import KNOWN_ACCOUNTS
 from examples.main import jpyc_0
+from examples.utils import add_zero_padding_to_hex, remove_decimals
 from src.jpyc import *
 from src.client import *
 
@@ -29,7 +30,7 @@ def main():
     domain = {
         "name": jpyc_0.contract.functions.name().call(),
         "version": "1",
-        "chainId": 31337,
+        "chainId": jpyc_0.client.w3.eth.chain_id,
         "verifyingContract": jpyc_0.contract.address,
     }
     nonce = f"0x{randbytes(32).hex()}"
@@ -57,7 +58,7 @@ def main():
     validAfter = 0
     validBefore = int(time.time()) + 3600
 
-    signature = Account.sign_typed_data(
+    signed_message_transfer = Account.sign_typed_data(
         KNOWN_ACCOUNTS[0].private_key,
         full_message={
             "domain": domain,
@@ -66,7 +67,7 @@ def main():
             "message": {
                 "from": from_,
                 "to": to,
-                "value": value,
+                "value": remove_decimals(value),  # NOTE: Don't forget decimals handling
                 "validAfter": validAfter,
                 "validBefore": validBefore,
                 "nonce": nonce,
@@ -88,7 +89,7 @@ def main():
         ],
     }
 
-    signature = Account.sign_typed_data(
+    signed_message_cancel = Account.sign_typed_data(
         KNOWN_ACCOUNTS[0].private_key,
         full_message={
             "domain": domain,
@@ -105,9 +106,9 @@ def main():
     jpyc_0.cancel_authorization(
         authorizer=from_,
         nonce=nonce,
-        v=signature.v,
-        r=hex(signature.r),
-        s=hex(signature.s),
+        v=signed_message_cancel.v,
+        r=add_zero_padding_to_hex(hex(signed_message_cancel.r), 32),
+        s=add_zero_padding_to_hex(hex(signed_message_cancel.s), 32),
     )
 
     # 6. Check if authorization has been cancelled (note that caller here is `KNOWN_ACCOUNTS[0]`)
@@ -119,12 +120,14 @@ def main():
             valid_after=validAfter,
             valid_before=validBefore,
             nonce=nonce,
-            v=signature.v,
-            r=hex(signature.r),
-            s=hex(signature.s),
+            v=signed_message_transfer.v,
+            r=add_zero_padding_to_hex(hex(signed_message_transfer.r), 32),
+            s=add_zero_padding_to_hex(hex(signed_message_transfer.s), 32),
         )
     except Exception as e:
-        print(f"Authorization has been successfully cancelled: {e}")
+        print(f"Authorization has been cancelled successfully.")
+    else:
+        raise Exception("ERROR: authorization has not been cancelled.")
 
 if __name__ == "__main__":
     main()

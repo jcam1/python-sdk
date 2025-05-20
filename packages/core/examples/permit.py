@@ -8,10 +8,10 @@ sys.path.append(str(Path(__file__).parents[1]))
 
 from examples.constants import KNOWN_ACCOUNTS
 from examples.main import jpyc_0
+from examples.utils import add_zero_padding_to_hex, remove_decimals
 from src.jpyc import *
 from src.client import *
 
-# WARNING: this is a broken code example (`EIP3009: invalid signature` is raised)
 def main():
     # 0. Configure a minter
     jpyc_0.configure_minter(
@@ -29,7 +29,7 @@ def main():
     domain = {
         "name": jpyc_0.contract.functions.name().call(),
         "version": "1",
-        "chainId": 31337,
+        "chainId": jpyc_0.client.w3.eth.chain_id,
         "verifyingContract": jpyc_0.contract.address,
     }
     types = {
@@ -43,6 +43,7 @@ def main():
             { "name": "owner", "type": "address" },
             { "name": "spender", "type": "address" },
             { "name": "value", "type": "uint256" },
+            { "name": 'nonce', "type": 'uint256' },
             { "name": "deadline", "type": "uint256" },
         ],
     }
@@ -50,10 +51,9 @@ def main():
     spender = KNOWN_ACCOUNTS[1].address
     value = 3000
     deadline = int(time.time()) + 3600
-    nonce = hex(jpyc_0.nonces(owner=owner))[2:]
-    nonce_bytes32 = f"0x{nonce.zfill(64)}"
+    nonce = jpyc_0.nonces(owner=owner)
 
-    signature = Account.sign_typed_data(
+    signed_message = Account.sign_typed_data(
         KNOWN_ACCOUNTS[0].private_key,
         full_message={
             "domain": domain,
@@ -62,9 +62,9 @@ def main():
             "message": {
                 "owner": owner,
                 "spender": spender,
-                "value": value,
+                "value": remove_decimals(value),  # NOTE: Don't forget decimals handling
+                "nonce": nonce,
                 "deadline": deadline,
-                "nonce": nonce_bytes32,
             },
         }
     )
@@ -75,9 +75,9 @@ def main():
         spender=spender,
         value=value,
         deadline=deadline,
-        v=signature.v,
-        r=hex(signature.r),
-        s=hex(signature.s),
+        v=signed_message.v,
+        r=add_zero_padding_to_hex(hex(signed_message.r), 32),
+        s=add_zero_padding_to_hex(hex(signed_message.s), 32),
     )
 
     # 4. Check allowance

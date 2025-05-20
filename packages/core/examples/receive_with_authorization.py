@@ -9,10 +9,10 @@ sys.path.append(str(Path(__file__).parents[1]))
 
 from examples.constants import KNOWN_ACCOUNTS
 from examples.main import jpyc_0, jpyc_1
+from examples.utils import add_zero_padding_to_hex, remove_decimals
 from src.jpyc import *
 from src.client import *
 
-# WARNING: this is a broken code example (`EIP3009: invalid signature` is raised)
 def main():
     # 0. Configure a minter
     jpyc_0.configure_minter(
@@ -30,7 +30,7 @@ def main():
     domain = {
         "name": jpyc_0.contract.functions.name().call(),
         "version": "1",
-        "chainId": 31337,
+        "chainId": jpyc_0.client.w3.eth.chain_id,
         "verifyingContract": jpyc_0.contract.address,
     }
     types = {
@@ -56,7 +56,7 @@ def main():
     validBefore = int(time.time()) + 3600
     nonce = f"0x{randbytes(32).hex()}"
 
-    signature = Account.sign_typed_data(
+    signed_message = Account.sign_typed_data(
         KNOWN_ACCOUNTS[0].private_key,
         full_message={
             "domain": domain,
@@ -65,7 +65,7 @@ def main():
             "message": {
                 "from": from_,
                 "to": to,
-                "value": value,
+                "value": remove_decimals(value),  # NOTE: Don't forget decimals handling
                 "validAfter": validAfter,
                 "validBefore": validBefore,
                 "nonce": nonce,
@@ -81,9 +81,9 @@ def main():
         valid_after=validAfter,
         valid_before=validBefore,
         nonce=nonce,
-        v=signature.v,
-        r=hex(signature.r),
-        s=hex(signature.s),
+        v=signed_message.v,
+        r=add_zero_padding_to_hex(hex(signed_message.r), 32),
+        s=add_zero_padding_to_hex(hex(signed_message.s), 32),
     )
 
     # 4. Check balances
