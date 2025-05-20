@@ -85,13 +85,18 @@ SUPPORTED_CHAINS: Final[ChainMetadata] = {
 # Chain-related helper functions #
 ##################################
 
+
 def enumerate_supported_networks() -> str:
     """Enumerate all the supported networks.
 
     Returns:
         str: supported networks
     """
-    return ", ".join(f"'{chain}' => {list(networks.keys())}" for chain, networks in SUPPORTED_CHAINS.items())
+    return ", ".join(
+        f"'{chain}' => {list(networks.keys())}"
+        for chain, networks in SUPPORTED_CHAINS.items()
+    )
+
 
 def is_supported_network(chain_name: str, network_name: str) -> bool:
     """Check if the specified network is supported by the SDK.
@@ -103,7 +108,10 @@ def is_supported_network(chain_name: str, network_name: str) -> bool:
     Returns:
         bool: True if supported, false otherwise
     """
-    return chain_name in SUPPORTED_CHAINS and network_name in SUPPORTED_CHAINS[chain_name]
+    return (
+        chain_name in SUPPORTED_CHAINS and network_name in SUPPORTED_CHAINS[chain_name]
+    )
+
 
 def get_default_rpc_endpoint(chain_name: str, network_name: str) -> RpcEndpoint:
     """Get the default RPC endpoint for the specified network.
@@ -119,6 +127,6 @@ def get_default_rpc_endpoint(chain_name: str, network_name: str) -> RpcEndpoint:
         NetworkNotSupported: If the specified network is not supported by the SDK
     """
     if not is_supported_network(chain_name, network_name):
-            raise NetworkNotSupported(chain_name, network_name)
+        raise NetworkNotSupported(chain_name, network_name)
 
     return SUPPORTED_CHAINS[chain_name][network_name]["rpc_endpoints"][0]

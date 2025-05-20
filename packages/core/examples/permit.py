@@ -1,6 +1,6 @@
-from pathlib import Path
 import sys
 import time
+from pathlib import Path
 
 from eth_account import Account
 
@@ -9,8 +9,7 @@ sys.path.append(str(Path(__file__).parents[1]))
 from examples.constants import KNOWN_ACCOUNTS
 from examples.main import jpyc_0
 from examples.utils import add_zero_padding_to_hex, remove_decimals
-from src.jpyc import *
-from src.client import *
+
 
 def main():
     # 0. Configure a minter
@@ -19,7 +18,8 @@ def main():
         minter_allowed_amount=1000000,
     )
 
-    # 1. Mint JPYC tokens (note that caller here is `KNOWN_ACCOUNTS[0]`)
+    # 1. Mint JPYC tokens
+    # NOTE: caller here is `KNOWN_ACCOUNTS[0]`
     jpyc_0.mint(
         to=KNOWN_ACCOUNTS[0].address,
         amount=10000,
@@ -34,17 +34,17 @@ def main():
     }
     types = {
         "EIP712Domain": [
-            { "name": "name", "type": "string" },
-            { "name": "version", "type": "string" },
-            { "name": "chainId", "type": "uint256" },
-            { "name": "verifyingContract", "type": "address" },
+            {"name": "name", "type": "string"},
+            {"name": "version", "type": "string"},
+            {"name": "chainId", "type": "uint256"},
+            {"name": "verifyingContract", "type": "address"},
         ],
         "Permit": [
-            { "name": "owner", "type": "address" },
-            { "name": "spender", "type": "address" },
-            { "name": "value", "type": "uint256" },
-            { "name": 'nonce', "type": 'uint256' },
-            { "name": "deadline", "type": "uint256" },
+            {"name": "owner", "type": "address"},
+            {"name": "spender", "type": "address"},
+            {"name": "value", "type": "uint256"},
+            {"name": "nonce", "type": "uint256"},
+            {"name": "deadline", "type": "uint256"},
         ],
     }
     owner = KNOWN_ACCOUNTS[0].address
@@ -66,10 +66,11 @@ def main():
                 "nonce": nonce,
                 "deadline": deadline,
             },
-        }
+        },
     )
 
-    # 3. Permit `spender` to transfer JPYC tokens on behalf of `owner` (note that caller here is `KNOWN_ACCOUNTS[0]`)
+    # 3. Permit `spender` to transfer JPYC tokens on behalf of `owner`
+    # NOTE: caller here is `KNOWN_ACCOUNTS[0]`
     jpyc_0.permit(
         owner=owner,
         spender=spender,
@@ -85,7 +86,11 @@ def main():
         owner=KNOWN_ACCOUNTS[0].address,
         spender=KNOWN_ACCOUNTS[1].address,
     )
-    print(f"Allowance of {KNOWN_ACCOUNTS[1].address} over {KNOWN_ACCOUNTS[0].address}'s assets: {allowance}")
+    print(
+        f"Allowance of {KNOWN_ACCOUNTS[1].address}"
+        f"over {KNOWN_ACCOUNTS[0].address}'s assets: {allowance}"
+    )
+
 
 if __name__ == "__main__":
     main()

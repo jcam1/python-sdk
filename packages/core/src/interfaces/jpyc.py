@@ -3,9 +3,10 @@ from abc import ABC, abstractmethod
 from ..utils.validators import (
     Bytes32,
     ChecksumAddress,
-    Uint256,
     Uint8,
+    Uint256,
 )
+
 
 class IJPYC(ABC):
     """Interface of JPYC contracts."""
@@ -80,7 +81,8 @@ class IJPYC(ABC):
             Uint256: Allowance of spender over owner's tokens
 
         Raises:
-            InvalidChecksumAddress: If supplied `owner` or `spender` is not in a valid form
+            InvalidChecksumAddress: If supplied `owner` or `spender`\
+                                    is not in a valid form
         """
         pass
 
@@ -104,7 +106,9 @@ class IJPYC(ABC):
     ######################
 
     @abstractmethod
-    def configure_minter(self, minter: ChecksumAddress, minter_allowed_amount: Uint256) -> Bytes32:
+    def configure_minter(
+        self, minter: ChecksumAddress, minter_allowed_amount: Uint256
+    ) -> Bytes32:
         """Call `configureMinter` function.
 
         Args:
@@ -164,7 +168,9 @@ class IJPYC(ABC):
         pass
 
     @abstractmethod
-    def transfer_from(self, from_: ChecksumAddress, to: ChecksumAddress, value: Uint256) -> Bytes32:
+    def transfer_from(
+        self, from_: ChecksumAddress, to: ChecksumAddress, value: Uint256
+    ) -> Bytes32:
         """Call `transferFrom` function.
 
         Args:
@@ -217,7 +223,8 @@ class IJPYC(ABC):
             AccountNotInitialized: If account is not initialized
             InvalidBytes32: If supplied `nonce` or `r` or `s` is not in a valid form
             InvalidChecksumAddress: If supplied `from_` or `to` is not in a valid form
-            InvalidUint256: If supplied `value` or `valid_after` or `valid_before` is not in a valid form
+            InvalidUint256: If supplied `value` or `valid_after` or `valid_before`\
+                            is not in a valid form
             InvalidUint8: If supplied `v` is not in a valid form
             TransactionFailed: If transaction fails
             TransactionSimulationFailed: If transaction simulation fails
@@ -257,7 +264,8 @@ class IJPYC(ABC):
             AccountNotInitialized: If account is not initialized
             InvalidBytes32: If supplied `nonce` or `r` or `s` is not in a valid form
             InvalidChecksumAddress: If supplied `from_` or `to` is not in a valid form
-            InvalidUint256: If supplied `value` or `valid_after` or `valid_before` is not in a valid form
+            InvalidUint256: If supplied `value` or `valid_after` or `valid_before`\
+                            is not in a valid form
             InvalidUint8: If supplied `v` is not in a valid form
             TransactionFailed: If transaction fails
             TransactionSimulationFailed: If transaction simulation fails
@@ -316,7 +324,9 @@ class IJPYC(ABC):
         pass
 
     @abstractmethod
-    def increase_allowance(self, spender: ChecksumAddress, increment: Uint256) -> Bytes32:
+    def increase_allowance(
+        self, spender: ChecksumAddress, increment: Uint256
+    ) -> Bytes32:
         """Call `increaseAllowance` function.
 
         Args:
@@ -336,7 +346,9 @@ class IJPYC(ABC):
         pass
 
     @abstractmethod
-    def decrease_allowance(self, spender: ChecksumAddress, decrement: Uint256) -> Bytes32:
+    def decrease_allowance(
+        self, spender: ChecksumAddress, decrement: Uint256
+    ) -> Bytes32:
         """Call `decreaseAllowance` function.
 
         Args:
@@ -383,7 +395,8 @@ class IJPYC(ABC):
         Raises:
             AccountNotInitialized: If account is not initialized
             InvalidBytes32: If supplied `r` or `s` is not in a valid form
-            InvalidChecksumAddress: If supplied `owner` or `spender` is not in a valid form
+            InvalidChecksumAddress: If supplied `owner` or `spender`\
+                                    is not in a valid form
             InvalidUint256: If supplied `value` or `deadline` is not in a valid form
             InvalidUint8: If supplied `v` is not in a valid form
             TransactionFailed: If transaction fails

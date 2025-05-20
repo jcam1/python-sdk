@@ -1,4 +1,4 @@
-from typing import List, Literal, TypeAlias, TypedDict
+from typing import Literal, TypeAlias, TypedDict
 
 ##########
 # Chains #
@@ -14,10 +14,12 @@ ChainName: TypeAlias = Literal[
     "local",
 ]
 
+
 class NetworkMetadata(TypedDict):
     id: int
     name: str
-    rpc_endpoints: List[str]
+    rpc_endpoints: list[str]
+
 
 ChainMetadata: TypeAlias = dict[ChainName, dict[str, NetworkMetadata]]
 """A type that contains metadata of chains."""

@@ -1,12 +1,11 @@
-from pathlib import Path
 import sys
+from pathlib import Path
 
 sys.path.append(str(Path(__file__).parents[1]))
 
 from examples.constants import KNOWN_ACCOUNTS
 from examples.main import jpyc_0
-from src.jpyc import *
-from src.client import *
+
 
 def main():
     # 0. Check initial total supply of jpyc tokens
@@ -43,6 +42,7 @@ def main():
     # 6. Check total supply of jpyc tokens after minting
     total_supply = jpyc_0.total_supply()
     print(f"Total Supply (after minting): {total_supply}")
+
 
 if __name__ == "__main__":
     main()

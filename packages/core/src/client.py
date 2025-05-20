@@ -19,6 +19,7 @@ from .utils.validators import (
     RpcEndpoint,
 )
 
+
 class SdkClient(ISdkClient):
     """SDK client."""
 
@@ -33,8 +34,9 @@ class SdkClient(ISdkClient):
         """Constructor that initializes SDK client.
 
         Notes:
-            - Either `chain_name` & `network_name` parameters or `rpc_endpoint` parameter are required.
-            - This constructor prioritizes `rpc_endpoint` parameter over \
+            - Either `chain_name` & `network_name` parameters\
+              or `rpc_endpoint` parameter are required.
+            - This constructor prioritizes `rpc_endpoint` parameter over\
             `chain_name` & `network_name` parameters when configuring `rpc_endpoint`.
 
         Args:
@@ -48,7 +50,11 @@ class SdkClient(ISdkClient):
             InvalidRpcEndpoint: If the supplied `rpc_endpoint` is not in a valid form
             NetworkNotSupported: If the specified network is not supported by the SDK
         """
-        rpc_endpoint = rpc_endpoint if rpc_endpoint is not None else get_default_rpc_endpoint(chain_name, network_name)
+        rpc_endpoint = (
+            rpc_endpoint
+            if rpc_endpoint is not None
+            else get_default_rpc_endpoint(chain_name, network_name)
+        )
         account = Account.from_key(private_key) if private_key is not None else None
         w3 = self.__configure_w3(
             rpc_endpoint=rpc_endpoint,
@@ -64,9 +70,9 @@ class SdkClient(ISdkClient):
 
     @staticmethod
     def __configure_w3(
-            rpc_endpoint: RpcEndpoint,
-            account: LocalAccount | None = None,
-        ) -> Web3:
+        rpc_endpoint: RpcEndpoint,
+        account: LocalAccount | None = None,
+    ) -> Web3:
         """Configure a web3 instance.
 
         Args:
@@ -102,10 +108,7 @@ class SdkClient(ISdkClient):
 
     @validate_call
     def set_custom_provider(self, rpc_endpoint: RpcEndpoint) -> Web3:
-        self.w3 = self.__configure_w3(
-            rpc_endpoint=rpc_endpoint,
-            account=self.account
-        )
+        self.w3 = self.__configure_w3(rpc_endpoint=rpc_endpoint, account=self.account)
 
         return self.w3
 
@@ -119,8 +122,7 @@ class SdkClient(ISdkClient):
         else:
             self.account = Account.from_key(private_key)
             self.w3 = self.__configure_w3(
-                rpc_endpoint=self.rpc_endpoint,
-                account=self.account
+                rpc_endpoint=self.rpc_endpoint, account=self.account
             )
 
         return self.account

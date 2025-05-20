@@ -4,6 +4,7 @@ from web3 import Web3
 
 from .validators import Uint256
 
+
 def remove_decimals(value: Uint256 | Decimal) -> Uint256:
     """Remove decimals.
 
@@ -13,12 +14,14 @@ def remove_decimals(value: Uint256 | Decimal) -> Uint256:
     Returns:
         Uint256: Value in wei
     """
-    return Web3.to_wei(value, 'ether')
+    return Web3.to_wei(value, "ether")
+
 
 def restore_decimals(func):
     """Decorator to restore decimals."""
+
     def wrapper(*args, **kwargs):
         result = func(*args, **kwargs)
-        return Web3.from_wei(result, 'ether')
+        return Web3.from_wei(result, "ether")
 
     return wrapper

@@ -1,12 +1,11 @@
-from pathlib import Path
 import sys
+from pathlib import Path
 
 sys.path.append(str(Path(__file__).parents[1]))
 
-from src.jpyc import *
-from src.client import *
-
 from examples.constants import KNOWN_ACCOUNTS
+from src.client import SdkClient
+from src.jpyc import JPYC
 
 # SDK clients
 client_0 = SdkClient(

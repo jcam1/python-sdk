@@ -1,13 +1,15 @@
 from dataclasses import dataclass
-from typing import Final, List
+from typing import Final
+
 
 @dataclass(frozen=True)
 class KnownAccount:
     address: str
     private_key: str
 
+
 # A list of known accounts (DO NOT USE IN PRODUCTION)
-KNOWN_ACCOUNTS: Final[List[KnownAccount]] = [
+KNOWN_ACCOUNTS: Final[list[KnownAccount]] = [
     KnownAccount(
         "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
         "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80",

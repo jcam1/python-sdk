@@ -1,7 +1,7 @@
-from pathlib import Path
-from random import randbytes
 import sys
 import time
+from pathlib import Path
+from random import randbytes
 
 from eth_account import Account
 
@@ -10,8 +10,7 @@ sys.path.append(str(Path(__file__).parents[1]))
 from examples.constants import KNOWN_ACCOUNTS
 from examples.main import jpyc_0, jpyc_1
 from examples.utils import add_zero_padding_to_hex, remove_decimals
-from src.jpyc import *
-from src.client import *
+
 
 def main():
     # 0. Configure a minter
@@ -35,18 +34,18 @@ def main():
     }
     types = {
         "EIP712Domain": [
-            { "name": "name", "type": "string" },
-            { "name": "version", "type": "string" },
-            { "name": "chainId", "type": "uint256" },
-            { "name": "verifyingContract", "type": "address" },
+            {"name": "name", "type": "string"},
+            {"name": "version", "type": "string"},
+            {"name": "chainId", "type": "uint256"},
+            {"name": "verifyingContract", "type": "address"},
         ],
         "ReceiveWithAuthorization": [
-            { "name": "from", "type": "address" },
-            { "name": "to", "type": "address" },
-            { "name": "value", "type": "uint256" },
-            { "name": "validAfter", "type": "uint256" },
-            { "name": "validBefore", "type": "uint256" },
-            { "name": "nonce", "type": "bytes32" },
+            {"name": "from", "type": "address"},
+            {"name": "to", "type": "address"},
+            {"name": "value", "type": "uint256"},
+            {"name": "validAfter", "type": "uint256"},
+            {"name": "validBefore", "type": "uint256"},
+            {"name": "nonce", "type": "bytes32"},
         ],
     }
     from_ = KNOWN_ACCOUNTS[0].address
@@ -70,7 +69,7 @@ def main():
                 "validBefore": validBefore,
                 "nonce": nonce,
             },
-        }
+        },
     )
 
     # 3. Receive JPYC tokens (note that caller here is `KNOWN_ACCOUNTS[1]`)
@@ -95,6 +94,7 @@ def main():
 
     balance_2 = jpyc_0.balance_of(account=KNOWN_ACCOUNTS[2].address)
     print(f"Balance of {KNOWN_ACCOUNTS[2].address}: {balance_2}")
+
 
 if __name__ == "__main__":
     main()

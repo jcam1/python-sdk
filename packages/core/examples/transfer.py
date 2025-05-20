@@ -1,12 +1,11 @@
-from pathlib import Path
 import sys
+from pathlib import Path
 
 sys.path.append(str(Path(__file__).parents[1]))
 
 from examples.constants import KNOWN_ACCOUNTS
 from examples.main import jpyc_0
-from src.jpyc import *
-from src.client import *
+
 
 def main():
     # 0. Configure a minter
@@ -33,6 +32,7 @@ def main():
 
     balance_1 = jpyc_0.balance_of(account=KNOWN_ACCOUNTS[1].address)
     print(f"Balance of {KNOWN_ACCOUNTS[1].address}: {balance_1}")
+
 
 if __name__ == "__main__":
     main()

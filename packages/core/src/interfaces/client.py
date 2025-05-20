@@ -9,6 +9,7 @@ from ..utils.validators import (
     RpcEndpoint,
 )
 
+
 class ISdkClient(ABC):
     """Interface of SDK client."""
 

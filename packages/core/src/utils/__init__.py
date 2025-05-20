@@ -4,16 +4,16 @@ from .artifacts import (
     resolve_artifacts_file_path,
 )
 from .chains import (
+    SUPPORTED_CHAINS,
     enumerate_supported_networks,
     get_default_rpc_endpoint,
-    SUPPORTED_CHAINS,
 )
 from .constants import (
     POA_MIDDLEWARE,
     SIGN_MIDDLEWARE,
-    UINT_MIN,
-    UINT256_MAX,
     UINT8_MAX,
+    UINT256_MAX,
+    UINT_MIN,
 )
 from .currencies import (
     remove_decimals,
@@ -23,8 +23,8 @@ from .errors import (
     AccountNotInitialized,
     InvalidBytes32,
     InvalidChecksumAddress,
-    InvalidUint256,
     InvalidUint8,
+    InvalidUint256,
     NetworkNotSupported,
     TransactionFailed,
     TransactionSimulationFailed,
@@ -38,8 +38,8 @@ from .validators import (
     Bytes32,
     ChecksumAddress,
     RpcEndpoint,
-    Uint256,
     Uint8,
+    Uint256,
 )
 
 __all__ = [
