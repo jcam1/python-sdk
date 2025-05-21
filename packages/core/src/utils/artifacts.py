@@ -9,7 +9,7 @@ def resolve_artifacts_file_path(contract_version: ContractVersion) -> Path:
     """Resolve the path of artifacts file from the specified contract version.
 
     Args:
-        version (ContractVersion): Contract version
+        contract_version (ContractVersion): Contract version
 
     Returns:
         Path: Absolute path of artifacts file
@@ -26,6 +26,7 @@ def get_artifacts(file_path: Path, artifact_type: ArtifactType) -> Any:
 
     Args:
         file_path (Path): absolute path of artifacts file
+        artifact_type (ArtifactType): type of artifacts
 
     Returns:
         Any: Artifacts of contracts

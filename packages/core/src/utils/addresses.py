@@ -24,7 +24,7 @@ def calc_checksum_address(address: str) -> ChecksumAddress:
     Returns:
         ChecksumAddress: Checksum address
     """
-    return ChecksumAddress(HexAddress(HexStr(address)))
+    return ChecksumAddress(HexAddress(HexStr(Web3.to_checksum_address(address))))
 
 
 def is_valid_address(address: str) -> bool:
@@ -43,11 +43,11 @@ def get_proxy_address(contract_version: ContractVersion) -> ChecksumAddress:
     """Get proxy address from the specified version.
 
     Note:
-        Default address should be the address of the latest version\
+        Default address should be the address of the latest version \
         (e.g., v2 as of May 2025).
 
     Args:
-        version (ContractVersion): Contract version
+        contract_version (ContractVersion): Contract version
 
     Returns:
         ChecksumAddress: Checksum address of proxy contract

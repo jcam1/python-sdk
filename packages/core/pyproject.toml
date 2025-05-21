@@ -57,6 +57,13 @@ dev = [
     "web3[tester]>=7.11.0",
 ]
 
+# pytest
+
+[tool.pytest.ini_options]
+testpaths = ["../../tests"]
+python_files = "test_*.py"
+python_functions = "test_*"
+
 # Ruff
 
 [tool.ruff]
