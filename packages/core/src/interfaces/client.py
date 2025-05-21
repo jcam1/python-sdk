@@ -27,6 +27,7 @@ class ISdkClient(ABC):
 
         Raises:
             NetworkNotSupported: If the specified network is not supported by the SDK
+            ValidationError: If pydantic validation fails
         """
         pass
 

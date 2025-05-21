@@ -50,6 +50,7 @@ class SdkClient(ISdkClient):
             InvalidBytes32: If the supplied `private_key` is not in a valid form
             InvalidRpcEndpoint: If the supplied `rpc_endpoint` is not in a valid form
             NetworkNotSupported: If the specified network is not supported by the SDK
+            ValidationError: If pydantic validation fails
         """
         rpc_endpoint = (
             rpc_endpoint
@@ -96,9 +97,12 @@ class SdkClient(ISdkClient):
                 name=SIGN_MIDDLEWARE,
                 layer=0,
             )
+        else:
+            w3.eth.default_account = None  # type: ignore[assignment]
 
         return w3
 
+    @validate_call
     def set_default_provider(self, chain_name: ChainName, network_name: str) -> Web3:
         self.w3 = self.__configure_w3(
             rpc_endpoint=get_default_rpc_endpoint(chain_name, network_name),
