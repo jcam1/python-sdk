@@ -9,5 +9,9 @@ __pycache__
 # ruff
 .ruff_cache
 
+# pytest
+.pytest_cache
+.coverage
+
 # misc
 DS_STORE
