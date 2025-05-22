@@ -13,5 +13,6 @@ members = ["packages/*"]
 
 [dependency-groups]
 dev = [
+    "pdoc>=15.0.3",
     "pre-commit>=4.2.0",
 ]
