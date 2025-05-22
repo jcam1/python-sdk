@@ -20,11 +20,20 @@ $ uv add --dev {package_name}
 $ uv remove {package_name}
 ```
 
-## Comments & Docstrings
+## Testing
 
-Docstrings should be written in the [Google-style](https://google.github.io/styleguide/pyguide.html#38-comments-and-docstrings).
+```sh
+# Run unit tests
+$ uv run pytest -v
+# Run unit tests with coverage info
+$ uv run pytest -v --cov --cov-branch
+# Run unit tests ignoring deprecation warnings
+$ uv run pytest -W ignore::DeprecationWarning
+```
 
-## Linting
+## Static Code Analysis
+
+### Linting
 
 ```sh
 # Run linter without fixing
@@ -33,7 +42,7 @@ $ uv run riff check {dir_name}
 $ uv run riff check {dir_name} --fix
 ```
 
-## Formatting
+### Formatting
 
 ```sh
 # Run formatter without fixing
@@ -41,3 +50,23 @@ $ uv run riff format {dir_name} --check
 # Run formatter & auto-fix
 $ uv run riff format {dir_name}
 ```
+
+### Type Checking
+
+```sh
+# Run mypy
+$ uv run mypy {dir_name}
+```
+
+### Pre-Commit Hooks
+
+Pre-commit script is configured at [`.pre-commit-config.yaml`](../../.pre-commit-config.yaml). This automatically runs the configured hooks before executing any `git commit` commands.
+
+```sh
+# Simulate pre-commit hooks without creating an actual commit
+$ uv run pre-commit run --all-files
+```
+
+## Comments & Docstrings
+
+Docstrings should be written in the [Google-style](https://google.github.io/styleguide/pyguide.html#38-comments-and-docstrings).
