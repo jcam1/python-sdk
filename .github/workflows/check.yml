@@ -1,0 +1,49 @@
+name: check
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+      - fix/develop  # temp
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  detect-changes:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    permissions:
+      pull-requests: read
+    outputs:
+      core: ${{ steps.filter.outputs.core }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            core:
+              - 'packages/core/**'
+
+  check-core:
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.core == 'true' }}
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./packages/core
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/install-packages
+      - name: Lint
+        run: uv run ruff check .
+      - name: Format
+        run: uv run ruff format --check .
+      - name: Run mypy
+        run: uv run mypy .
+      - name: Run tests
+        run: yarn run pytest -v --cov -W ignore::DeprecationWarning
