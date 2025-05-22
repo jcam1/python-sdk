@@ -1,5 +1,8 @@
 # Core SDK
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
+![build](https://github.com/jcam1/python-sdk/actions/workflows/check.yml/badge.svg)
+
 Python SDK to interact with [the JPYCv2's core contracts](https://github.com/jcam1/JPYCv2/blob/main/contracts/v1/FiatTokenV1.sol). Ideal for those who want to interact with JPYC protocol in any Python-backend environments.
 
 ## 🪄 Usage
