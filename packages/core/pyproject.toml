@@ -51,10 +51,9 @@ dev = [
     "mypy>=1.15.0",
     "pytest>=8.3.5",
     "pytest-cov>=6.1.1",
-    "python-dotenv>=1.1.0",
+    "pytest-mock>=3.14.0",
     "ruff>=0.11.9",
     "sphinx>=8.2.3",
-    "web3[tester]>=7.11.0",
 ]
 
 # pytest
