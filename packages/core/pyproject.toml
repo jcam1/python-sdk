@@ -3,7 +3,7 @@ name = "jpyc-core-sdk"
 version = "1.0.0"
 requires-python = ">=3.12"
 license = "MIT"
-description = "Python SDKs for JPYCv2 contracts"
+description = "A Python SDK for interacting with JPYCv2 contracts"
 readme = "README.md"
 keywords = [
     "jpyc",
@@ -42,7 +42,7 @@ dependencies = [
 
 [project.urls]
 repository = "https://github.com/jcam1/python-sdk"
-documentation = "https://github.com/jcam1/python-sdk/tree/main/docs"
+documentation = "https://github.com/jcam1/python-sdk/tree/main/docs/core"
 "Bug Tracker" = "https://github.com/jcam1/python-sdk/issues/new?template=bug_report.md"
 
 [dependency-groups]
@@ -54,6 +54,10 @@ dev = [
     "pytest-mock>=3.14.0",
     "ruff>=0.11.9",
 ]
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
 
 # pytest
 
