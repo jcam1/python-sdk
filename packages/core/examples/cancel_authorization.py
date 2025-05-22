@@ -55,8 +55,8 @@ def main() -> None:
     from_ = KNOWN_ACCOUNTS[0].address
     to = KNOWN_ACCOUNTS[2].address
     value = 3000
-    validAfter = 0
-    validBefore = int(time.time()) + 3600
+    valid_after = 0
+    valid_before = int(time.time()) + 3600
 
     signed_message_transfer = Account.sign_typed_data(
         KNOWN_ACCOUNTS[0].private_key,
@@ -68,8 +68,8 @@ def main() -> None:
                 "from": from_,
                 "to": to,
                 "value": remove_decimals(value),  # NOTE: Don't forget decimals handling
-                "validAfter": validAfter,
-                "validBefore": validBefore,
+                "validAfter": valid_after,
+                "validBefore": valid_before,
                 "nonce": nonce,
             },
         },
@@ -119,8 +119,8 @@ def main() -> None:
             from_=from_,
             to=to,
             value=value,
-            valid_after=validAfter,
-            valid_before=validBefore,
+            valid_after=valid_after,
+            valid_before=valid_before,
             nonce=nonce,
             v=signed_message_transfer.v,
             r=add_zero_padding_to_hex(hex(signed_message_transfer.r), 32),
