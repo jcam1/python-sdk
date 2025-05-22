@@ -550,7 +550,7 @@ wheels = [
 [[package]]
 name = "jpyc-core-sdk"
 version = "1.0.0"
-source = { virtual = "packages/core" }
+source = { editable = "packages/core" }
 dependencies = [
     { name = "eth-typing" },
     { name = "pydantic" },
