@@ -146,10 +146,13 @@ def test_constructor_failures(
 def test_set_default_provider(sdk_client):
     sdk_client.set_default_provider(
         chain_name="ethereum",
-        network_name="mainnet",
+        network_name="sepolia",
     )
 
-    assert sdk_client.w3.provider.endpoint_uri == "https://ethereum-rpc.publicnode.com"
+    assert (
+        sdk_client.w3.provider.endpoint_uri
+        == "https://ethereum-sepolia-rpc.publicnode.com"
+    )
     assert sdk_client.w3.eth.default_account == KNOWN_ACCOUNTS[0].address
 
 
@@ -188,7 +191,7 @@ def test_set_default_provider_failures(
 
 
 def test_set_custom_provider(sdk_client):
-    rpc_endpoint = "https://ethereum-rpc.publicnode.com"
+    rpc_endpoint = "https://astar.public.blastapi.io"
 
     sdk_client.set_custom_provider(
         rpc_endpoint=rpc_endpoint,
@@ -232,7 +235,7 @@ def test_set_account(
         private_key=private_key,
     )
 
-    assert sdk_client.w3.provider.endpoint_uri == "http://127.0.0.1:8545/"
+    assert sdk_client.w3.provider.endpoint_uri == "https://ethereum-rpc.publicnode.com"
 
     if account is not None:
         assert account.address == address
