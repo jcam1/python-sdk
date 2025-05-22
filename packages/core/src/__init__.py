@@ -10,4 +10,6 @@ __all__ = [
     "SdkClient",
     # jpyc
     "JPYC",
+    # utils
+    "utils",
 ]
