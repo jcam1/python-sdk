@@ -10,8 +10,8 @@ Python SDK to interact with [the JPYCv2's core contracts](https://github.com/jca
 First, configure clients for the SDK.
 
 ```py
-from jpyc-core-sdk.client import SdkClient
-from jpyc-core-sdk.jpyc import JPYC
+from jpyc_core_sdk.client import SdkClient
+from jpyc_core_sdk.jpyc import JPYC
 
 # Configure SDK client using default RPC endpoint
 client = SdkClient(
@@ -44,9 +44,10 @@ jpyc.transfer(
 )
 ```
 
-> [!NOTE]  
-> More code examples are available at [`examples` directory](./examples/).
-> More detailed development documentation is available at [`docs` directory](../../docs/core/).
+> [!NOTE]
+>
+> - More code examples are available at [`examples` directory](./examples/).
+> - More detailed development documentation is available at [`docs` directory](../../docs/core/).
 
 ## ⛓️ Supported Networks
 
@@ -100,22 +101,25 @@ Please see [`README` at `tests` directory](../../tests/README.md).
 
 ### ✅ Static Code Analysis
 
+> [!NOTE]
+> Analysis results are also to be checked on our [CI workflow](../../.github/workflows/check.yml).
+
 #### Linting
 
 ```sh
 # run linter without fixing
-$ uv run riff check {dir_name}
+$ uv run ruff check {dir_name}
 # run linter & auto-fix (if available)
-$ uv run riff check {dir_name} --fix
+$ uv run ruff check {dir_name} --fix
 ```
 
 #### Formatting
 
 ```sh
 # run formatter without fixing
-$ uv run riff format {dir_name} --check
+$ uv run ruff format {dir_name} --check
 # run formatter & auto-fix
-$ uv run riff format {dir_name}
+$ uv run ruff format {dir_name}
 ```
 
 #### Type Checking

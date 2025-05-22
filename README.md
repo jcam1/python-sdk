@@ -15,7 +15,7 @@ Please refer to `README`s of respective SDKs for more details.
 
 ## ⬇️ Installation
 
-### Repository
+### 1. Clone Repository
 
 ```sh
 # clone this repo
@@ -24,10 +24,19 @@ $ git clone https://github.com/jcam1/python-sdk.git
 $ cd python-sdk
 ```
 
-### uv
+### 2. Install `uv`
 
-> [!IMPORTANT]
-> This repo uses `uv` for package management purposes. If not installed, please read & follow [uv's official instructions](https://docs.astral.sh/uv/getting-started/installation/) to install any necessary software for development.
+This repo uses `uv` for package management purposes. If not installed, please read & follow [uv's official instructions](https://docs.astral.sh/uv/getting-started/installation/) to install any necessary software for development. For example, the following command installs `uv` on MacOS.
+
+```sh
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+### 3. Install packages
+
+```sh
+uv sync
+```
 
 ## 💪🏻 Contributing
 

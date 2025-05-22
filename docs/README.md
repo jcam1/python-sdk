@@ -18,4 +18,8 @@ $ uv run pdoc ./packages/core/src -o ./docs/core -d google
 
 ## 🔍 UI
 
-Type `{absolute_path_of_any_parent_directories}/python-sdk/docs/index.html` into your browser to see the contents.
+Type the following into your browser to see the contents.
+
+```sh
+{absolute_path_of_any_parent_directories}/python-sdk/docs/core/index.html
+```
