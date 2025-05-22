@@ -64,18 +64,10 @@ class JPYC(IJPYC):
                 contract_address=address,
                 contract_version=contract_version,
             )
-            owner_address = client.get_account_address()
-            contract.functions.initialize(
-                "JPY Coin",
-                "JPYC",
-                "Yen",
-                18,
-                owner_address,
-                owner_address,
-                owner_address,
-                owner_address,
-                owner_address,
-            ).transact()
+            self.__initialize_contract(
+                client=client,
+                contract=contract,
+            )
         else:
             address = (
                 contract_address
@@ -149,6 +141,30 @@ class JPYC(IJPYC):
                 artifact_type="abi",
             ),
         )
+
+    @staticmethod
+    def __initialize_contract(
+        client: SdkClient,
+        contract: Contract,
+    ) -> None:
+        """Initialize contract.
+
+        Args:
+            client (SdkClient): Configured SDK client
+            contract (Contract): Configured contract instance
+        """
+        owner_address = client.get_account_address()
+        contract.functions.initialize(
+            "JPY Coin",
+            "JPYC",
+            "Yen",
+            18,
+            owner_address,
+            owner_address,
+            owner_address,
+            owner_address,
+            owner_address,
+        ).transact()
 
     def __account_initialized(self) -> None:
         """Checks if account is initialized.
