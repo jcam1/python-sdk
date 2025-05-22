@@ -46,4 +46,4 @@ jobs:
       - name: Run mypy
         run: uv run mypy .
       - name: Run tests
-        run: yarn run pytest -v --cov -W ignore::DeprecationWarning
+        run: uv run pytest -v --cov -W ignore::DeprecationWarning
