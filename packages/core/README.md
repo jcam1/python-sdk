@@ -3,11 +3,22 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 ![build](https://github.com/jcam1/python-sdk/actions/workflows/check.yml/badge.svg)
 
-Python SDK to interact with [the JPYCv2's core contracts](https://github.com/jcam1/JPYCv2/blob/main/contracts/v1/FiatTokenV1.sol). Ideal for those who want to interact with JPYC protocol in any Python-backend environments.
+A Python SDK to interact with [the JPYCv2's core contracts](https://github.com/jcam1/JPYCv2/blob/main/contracts/v1/FiatTokenV1.sol). Ideal for those who want to interact with JPYC protocol in any Python-backend environments.
 
 ## 🪄 Usage
 
-First, configure clients for the SDK.
+### 1. Install `jpyc_core_sdk` Package
+
+```sh
+# uv
+$ uv add jpyc_core_sdk
+# poetry
+$ poetry add jpyc_core_sdk
+# pip
+$ pip install jpyc_core_sdk
+```
+
+### 2. Configure SDK Clients
 
 ```py
 from jpyc_core_sdk.client import SdkClient
@@ -32,16 +43,20 @@ client = SdkClient(
 jpyc = JPYC(client=client)
 ```
 
-Then, use the configured JPYC client to call JPYC's contract functions wherever you would like.
+### 3. Call JPYC Contracts
+
+Use the configured JPYC client to call JPYC's contract functions wherever you would like.
 
 ```py
 from {CONFIG_FILE} import jpyc
 
+...
 # Call a contract function (e.g., transfer)
-jpyc.transfer(
+tx_hash = jpyc.transfer(
     to={TO_ADDRESS},
     value=2025,
 )
+...
 ```
 
 > [!NOTE]
