@@ -43,6 +43,9 @@ client = SdkClient(
 jpyc = JPYC(client=client)
 ```
 
+> [!TIP]
+> As for sensitive data such as private keys or api keys, we strongly recommend using some secure storage and read them from the securely embedded environment variables. This reflects our design decision of not using any environment variables within the SDK itself, aiming to make it as flexible as possible for the developers. Also, using some arbitrary environmental variables often results in unexpected behaviors (e.g., naming conflicts).
+
 ### 3. Call JPYC Contracts
 
 Use the configured JPYC client to call JPYC's contract functions wherever you would like.
