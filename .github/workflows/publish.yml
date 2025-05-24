@@ -39,8 +39,8 @@ jobs:
       - uses: ./.github/actions/install-packages
       - name: get version from `pyproject.toml`
         run: |
-          package_version=($(uv version))
-          echo "GIT_TAG_VERSION=$package_version[2]" >> $GITHUB_ENV
+          package_version=`grep -m 1 version pyproject.toml | grep -e '\d.\d.\d' -o`
+          echo "GIT_TAG_VERSION=$package_version" >> $GITHUB_ENV
       - uses: rickstaa/action-create-tag@v1
         id: create-tag
         with:
