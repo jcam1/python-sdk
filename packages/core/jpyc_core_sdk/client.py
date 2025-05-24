@@ -1,6 +1,7 @@
 from eth_account.signers.local import LocalAccount
 from pydantic import validate_call
 from web3 import Account, HTTPProvider, Web3
+from web3._utils.empty import empty
 from web3.middleware import (
     ExtraDataToPOAMiddleware,
     SignAndSendRawMiddlewareBuilder,
@@ -98,7 +99,7 @@ class SdkClient(ISdkClient):
                 layer=0,
             )
         else:
-            w3.eth.default_account = None  # type: ignore[assignment]
+            w3.eth.default_account = empty
 
         return w3
 
