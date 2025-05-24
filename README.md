@@ -9,9 +9,9 @@ Monorepo for JPYC Python SDKs.
 
 Please refer to `README`s of respective SDKs for more details.
 
-|   name | `README`                                   |
-| -----: | :----------------------------------------- |
-| `core` | [packages/core](./packages/core/README.md) |
+|            name | `README`                                   |
+| --------------: | :----------------------------------------- |
+| `jpyc-core-sdk` | [packages/core](./packages/core/README.md) |
 
 ## ⬇️ Installation
 

@@ -21,8 +21,7 @@ $ pip install jpyc_core_sdk
 ### 2. Configure SDK Clients
 
 ```py
-from jpyc_core_sdk.client import SdkClient
-from jpyc_core_sdk.jpyc import JPYC
+from jpyc_core_sdk import JPYC, SdkClient
 
 # Configure SDK client using default RPC endpoint
 client = SdkClient(
