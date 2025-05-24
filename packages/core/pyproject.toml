@@ -1,5 +1,5 @@
 [project]
-name = "jpyc-core-sdk"
+name = "jpyc_core_sdk"
 version = "1.0.0"
 requires-python = ">=3.12"
 license = "MIT"
