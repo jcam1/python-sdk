@@ -10,8 +10,8 @@ from web3.contract.contract import (
 )
 from web3.eth import Eth
 
-from packages.core.src.client import SdkClient
-from packages.core.src.jpyc import JPYC
+from packages.core.jpyc_core_sdk.client import SdkClient
+from packages.core.jpyc_core_sdk.jpyc import JPYC
 
 
 @dataclass(frozen=True)

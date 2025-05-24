@@ -1,7 +1,7 @@
 from eth_account import Account
 import pytest
 
-from packages.core.src.utils.errors import (
+from packages.core.jpyc_core_sdk.utils.errors import (
     AccountNotInitialized,
     InvalidBytes32,
     InvalidChecksumAddress,

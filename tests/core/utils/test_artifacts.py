@@ -1,6 +1,6 @@
 import pytest
 
-from packages.core.src.utils.artifacts import (
+from packages.core.jpyc_core_sdk.utils.artifacts import (
     get_artifacts,
     resolve_artifacts_file_path,
 )

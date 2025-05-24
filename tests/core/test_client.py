@@ -3,9 +3,9 @@ from pydantic import ValidationError
 import pytest
 from web3 import Web3
 
-from packages.core.src.client import SdkClient
-from packages.core.src.utils.chains import get_default_rpc_endpoint
-from packages.core.src.utils.errors import (
+from packages.core.jpyc_core_sdk.client import SdkClient
+from packages.core.jpyc_core_sdk.utils.chains import get_default_rpc_endpoint
+from packages.core.jpyc_core_sdk.utils.errors import (
     AccountNotInitialized,
     InvalidBytes32,
     InvalidRpcEndpoint,

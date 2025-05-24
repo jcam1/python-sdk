@@ -13,7 +13,7 @@ Run the following commands that generate a collection of documents under [`./doc
 # cd into the root directory
 $ cd python-sdk
 # generate documentation from the google-styled docstrings
-$ uv run pdoc ./packages/core/src -o ./docs/core -d google
+$ uv run pdoc ./packages/core/jpyc-core-sdk -o ./docs/core -d google
 ```
 
 ## 🔍 UI
