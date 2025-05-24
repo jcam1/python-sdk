@@ -77,11 +77,13 @@ jobs:
       run:
         working-directory: ./packages/core
     timeout-minutes: 5
+    permissions:
+      id-token: write
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/install-packages
       - name: Build package
         run: uv build --no-cache
       - name: Publish package to PyPI
-        # NOTE: specify directory bc `dist` directory is generated at the root-level
+        # NOTE: need to specify directory bc `dist` directory is generated at the root-level
         run: uv publish --no-cache --directory ../../
