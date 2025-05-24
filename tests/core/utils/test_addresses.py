@@ -1,6 +1,6 @@
 import pytest
 
-from packages.core.src.utils.addresses import (
+from packages.core.jpyc_core_sdk.utils.addresses import (
     calc_checksum_address,
     get_proxy_address,
     is_valid_address,

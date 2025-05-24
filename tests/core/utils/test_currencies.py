@@ -2,7 +2,7 @@ from decimal import Decimal
 
 import pytest
 
-from packages.core.src.utils.currencies import (
+from packages.core.jpyc_core_sdk.utils.currencies import (
     remove_decimals,
     restore_decimals,
 )
