@@ -1,7 +1,7 @@
 [project]
 name = "jpyc-python-sdks"
 version = "1.0.0"
-requires-python = ">=3.11"
+requires-python = ">=3.12"
 description = "Python SDKs for JPYC protocols"
 readme = "README.md"
 
