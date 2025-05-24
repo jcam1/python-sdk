@@ -2,6 +2,7 @@ from eth_account.signers.local import LocalAccount
 from pydantic import ValidationError
 import pytest
 from web3 import Web3
+from web3._utils.empty import empty
 
 from packages.core.jpyc_core_sdk.client import SdkClient
 from packages.core.jpyc_core_sdk.utils.chains import get_default_rpc_endpoint
@@ -78,6 +79,7 @@ def test_constructor(
     )
     if private_key is None:
         assert client.account is None
+        assert client.w3.eth.default_account == empty
     else:
         assert isinstance(client.account, LocalAccount)
         assert client.account.address == address
@@ -242,7 +244,7 @@ def test_set_account(
         assert sdk_client.w3.eth.default_account == address
     else:
         assert account is None
-        assert sdk_client.w3.eth.default_account is None
+        assert sdk_client.w3.eth.default_account == empty
 
 
 def test_set_account_failures(sdk_client):
