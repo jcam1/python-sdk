@@ -1,12 +1,12 @@
 [project]
-name = "jpyc_python_sdks"
-version = "1.0.1"
+name = "jpyc-python-sdks"
+version = "1.0.2"
 requires-python = ">=3.12"
 description = "Python SDKs for JPYC protocols"
 readme = "README.md"
 
 [tool.uv.sources]
-core = { workspace = true }
+jpyc-core-sdk = { workspace = true }
 
 [tool.uv.workspace]
 members = ["packages/*"]

@@ -1,7 +1,7 @@
 import pytest
 from web3.contract.contract import Contract
 
-from packages.core.src.jpyc import JPYC
+from packages.core.jpyc_core_sdk.jpyc import JPYC
 
 from .conftest import V2_PROXY_ADDRESS
 

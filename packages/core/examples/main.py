@@ -4,8 +4,8 @@ from pathlib import Path
 sys.path.append(str(Path(__file__).parents[1]))
 
 from examples.constants import KNOWN_ACCOUNTS
-from src.client import SdkClient
-from src.jpyc import JPYC
+from jpyc_core_sdk.client import SdkClient
+from jpyc_core_sdk.jpyc import JPYC
 
 # SDK clients
 client_0 = SdkClient(

@@ -14,7 +14,7 @@ def resolve_artifacts_file_path(contract_version: ContractVersion) -> Path:
     Returns:
         Path: Absolute path of artifacts file
     """
-    path = Path(__file__).parent.parent.parent.joinpath(
+    path = Path(__file__).parent.parent.joinpath(
         "artifacts", f"v{contract_version}.json"
     )
 

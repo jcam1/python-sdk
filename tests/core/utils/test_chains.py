@@ -1,11 +1,11 @@
 import pytest
 
-from packages.core.src.utils.chains import (
+from packages.core.jpyc_core_sdk.utils.chains import (
     enumerate_supported_networks,
     get_default_rpc_endpoint,
     is_supported_network,
 )
-from packages.core.src.utils.errors import (
+from packages.core.jpyc_core_sdk.utils.errors import (
     NetworkNotSupported,
 )
 
