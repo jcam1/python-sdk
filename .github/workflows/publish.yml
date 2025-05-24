@@ -83,4 +83,5 @@ jobs:
       - name: Build package
         run: uv build --no-cache
       - name: Publish package to PyPI
-        run: uv publish --no-cache
+        # NOTE: specify directory bc `dist` directory is generated at the root-level
+        run: uv publish --no-cache --directory ../../
