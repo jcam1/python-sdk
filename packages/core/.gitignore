@@ -1,6 +1,4 @@
 # python
-.venv
-.python-version
 dist
 *.egg-info
 __pycache__
@@ -16,5 +14,4 @@ __pycache__
 .coverage
 
 # misc
-*_cache
-cspell.json
+DS_STORE

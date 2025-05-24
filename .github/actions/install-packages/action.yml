@@ -1,0 +1,15 @@
+name: install packages
+description: set up uv & install packages
+
+runs:
+  using: composite
+  steps:
+    - uses: astral-sh/setup-uv@v6
+      with:
+        version: "0.7.6"
+    - uses: actions/setup-python@v5
+      with:
+        python-version-file: "pyproject.toml"
+    - name: Install packages
+      shell: bash
+      run: uv sync --locked --all-extras --dev
