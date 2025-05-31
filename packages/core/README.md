@@ -7,15 +7,15 @@ A Python SDK to interact with [the JPYCv2's core contracts](https://github.com/j
 
 ## 🪄 Usage
 
-### 1. Install `jpyc_core_sdk` Package
+### 1. Install `jpyc-core-sdk` Package
 
 ```sh
 # uv
-$ uv add jpyc_core_sdk
+$ uv add jpyc-core-sdk
 # poetry
-$ poetry add jpyc_core_sdk
+$ poetry add jpyc-core-sdk
 # pip
-$ pip install jpyc_core_sdk
+$ pip install jpyc-core-sdk
 ```
 
 ### 2. Configure SDK Clients
