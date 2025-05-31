@@ -4,14 +4,17 @@ We appreciate your interest to contribute to this project! Please read the follo
 
 ## 📝 Create an Issue
 
-The first thing to do is to create a new issue. Feel free to create new issues from [here](https://github.com/jcam1/python-sdk/issues/new/choose) to propose/request new features or report any bugs you found.
+The first thing to do is to create a new issue. Feel free to create new issues from [here](https://github.com/jcam1/python-sdk/issues/new/choose) to propose/request new features or report any bugs you found, following the respective templates.
 
 ## ⬇️ Clone This Repo
 
-Next, clone this repository. Our default branch is set to `develop`.
+Next, clone this repository on `develop` branch.
+
+> [!TIP]
+> Our default branch is set to `main`.
 
 ```sh
-git clone https://github.com/jcam1/python-sdk.git
+git clone -b develop https://github.com/jcam1/python-sdk.git
 ```
 
 ## ⚡ Checkout to a New Branch
