@@ -33,7 +33,7 @@ from .types import (
     ArtifactType,
     ChainMetadata,
     ChainName,
-    ContractVersion,
+    ContractType,
 )
 from .validators import (
     Bytes32,
@@ -75,7 +75,7 @@ __all__ = [
     "ArtifactType",
     "ChainMetadata",
     "ChainName",
-    "ContractVersion",
+    "ContractType",
     # validators
     "Bytes32",
     "ChecksumAddress",
