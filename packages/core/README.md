@@ -1,9 +1,32 @@
-# Core SDK
+# JPYC Core SDK
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 ![build](https://github.com/jcam1/python-sdk/actions/workflows/check.yml/badge.svg)
 
-A Python SDK to interact with [the JPYCv2's core contracts](https://github.com/jcam1/JPYCv2/blob/main/contracts/v1/FiatTokenV1.sol). Ideal for those who want to interact with JPYC protocol in any Python-backend environments.
+Python SDK to interact with [the JPYC core contracts](https://github.com/jcam1/JPYCv2/blob/main/contracts/v1/FiatTokenV1.sol). Ideal for those who want to interact with the JPYC protocol in any Python-backend environments. => 日本語版は[こちら](./README-jp.md)。
+
+## ✅ Supported Contract Types & Networks
+
+The SDK supports the following contract types and networks as of October 2025. Please use one of the combinations of chain & network names when configuring the SDK clients.
+
+> [!NOTE]
+> You could also configure your locally-deployed contracts for local development and/or testing. For chain & network names, please use `localhost`-`devnet` pair.
+
+> [!IMPORTANT]
+> **We're currently supporting `HTTPProvider` (the most simple & widely-used one) only.** More providers (notably `WebSocketProvider`) are to be supported in the near future, so stay tuned!
+
+|                               | JPYC | JPYC Prepaid | Chain Name | Network Name |
+| ----------------------------: | :--: | :----------: |  :----------: |  :----------: |
+|         Ethereum Mainnet |  ✅  |      ✅      |  `ethereum` | `mainnet` |
+| Ethereum Sepolia Testnet |  ✅  |      ✅      | `ethereum` | `sepolia` |
+|      Polygon PoS Mainnet |  ✅  |      ✅      | `polygon` | `mainnet` |
+|     Polygon Amoy Testnet |  ✅  |      ✅      | `polygon` | `amoy` |
+|           Gnosis Mainnet |  ✅  |      ✅      | `gnosis` | `mainnet` |
+|    Gnosis Chiado Testnet |  ✅  |      ✅      | `gnosis` | `chiado` |
+|        Avalanche Mainnet |  ✅  |      ✅      | `avalanche` | `mainnet` |
+|   Avalanche Fuji Testnet |  ✅  |      ✅      | `avalanche` | `fuji` |
+|            Astar Mainnet |  ✅  |      ✅      | `astar` | `mainnet` |
+|           Shiden Mainnet |  ✅  |      ✅      | `shiden` | `mainnet` |
 
 ## 🪄 Usage
 
@@ -25,14 +48,14 @@ from jpyc_core_sdk import JPYC, SdkClient
 
 # Configure SDK client using default RPC endpoint
 client = SdkClient(
-    chain_name="ethereum",
+    chain_name="polygon",
     network_name="mainnet",
     private_key={PRIVATE_KEY},
 )
 
 # Or configure SDK client using custom RPC endpoint
 client = SdkClient(
-    chain_name="ethereum",
+    chain_name="polygon",
     network_name="mainnet",
     private_key={PRIVATE_KEY},
     rpc_endpoint={CUSTOM_RPC_ENDPOINT},
@@ -61,31 +84,9 @@ tx_hash = jpyc.transfer(
 ...
 ```
 
-> [!NOTE]
->
-> - More code examples are available at [`examples` directory](./examples/).
-> - More detailed development documentation is available at [`docs` directory](../../docs/core/).
+## ✨ Code Examples
 
-## ⛓️ Supported Networks
-
-Please use one of the combinations of chain-network names when configuring the SDK clients.
-
-> [!TIP]
-> For local testing & development, you could use `localhost`-`devnet` pair.
-
-|  Chain Name | Network Names        |
-| ----------: | :------------------- |
-|  `ethereum` | `mainnet`, `sepolia` |
-|   `polygon` | `mainnet`, `amoy`    |
-|    `gnosis` | `mainnet`, `chiado`  |
-| `avalanche` | `mainnet`, `fuji`    |
-|     `astar` | `mainnet`            |
-|    `shiden` | `mainnet`            |
-| `localhost` | `devnet`             |
-
-## 💬 Supported Providers
-
-**We're currently supporting `HTTPProvider` (the most simple & widely-used one) only.** More providers (notably `WebSocketProvider`) are to be supported in the near future, so stay tuned!
+For your reference, we've implemented code examples in a separate [`examples` directory](./examples/). Please follow the instructions there to get started.
 
 ## 🛠 Development
 
@@ -158,3 +159,7 @@ $ uv run pre-commit run --all-files
 ### 📝 Comments & Docstrings
 
 Docstrings should be written in [the Google-style](https://google.github.io/styleguide/pyguide.html#38-comments-and-docstrings).
+
+### 📚 Documentation
+
+You can find the auto-generated developer documents [here](../../docs/core/).

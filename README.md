@@ -3,11 +3,11 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/jcam1/python-sdk/issues/new/choose)
 
-Monorepo for JPYC Python SDKs.
+Monorepo of JPYC Python SDKs. => 日本語版は[こちら](./README-jp.md)。
 
 ## 💫 Available SDKs
 
-Please refer to `README`s of respective SDKs for more details.
+Please refer to `README`s of the respective SDKs for more details.
 
 |            name | `README`                                   |
 | --------------: | :----------------------------------------- |
