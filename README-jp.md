@@ -9,9 +9,9 @@
 
 各 SDK に関する詳細は、それぞれの `README` を参照ください。
 
-|            SDK 名 | `README`                                   |
+|            SDK名 | `README`                                   |
 | --------------: | :----------------------------------------- |
-| `jpyc-core-sdk` | [packages/core](./packages/core/README.md) |
+| `jpyc-core-sdk` | [packages/core](./packages/core/README-jp.md) |
 
 ## ⬇️ インストール
 

@@ -7,7 +7,7 @@ Python SDK to interact with [the JPYC core contracts](https://github.com/jcam1/J
 
 ## ✅ Supported Contract Types & Networks
 
-The SDK supports the following contract types and networks as of October 2025. Please use one of the combinations of chain & network names when configuring the SDK clients.
+The SDK supports the following contract types and networks as of October 2025. Please use one of the combinations of chain & network names when configuring the SDK client.
 
 > [!NOTE]
 > You could also configure your locally-deployed contracts for local development and/or testing. For chain & network names, please use `localhost`-`devnet` pair.
