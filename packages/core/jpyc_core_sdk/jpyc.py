@@ -24,7 +24,7 @@ from .utils.errors import (
     TransactionFailed,
     TransactionSimulationFailed,
 )
-from .utils.types import ContractVersion, TransactionArgs
+from .utils.types import ContractType, TransactionArgs
 from .utils.validators import Bytes32, ChecksumAddress, Uint8, Uint256
 
 
@@ -34,10 +34,10 @@ class JPYC(IJPYC):
     def __init__(
         self,
         client: SdkClient,
-        contract_version: ContractVersion = "2",
+        contract_type: ContractType = "jpyc",
         contract_address: EthChecksumAddress | None = None,
     ) -> None:
-        """Constructor that initializes JPYC client.
+        """Constructor that initializes a JPYC client.
 
         Notes:
             - If `client` parameter is configured to use localhost network,\
@@ -48,7 +48,7 @@ class JPYC(IJPYC):
 
         Args:
             client (SdkClient): Configured SDK client
-            contract_version (ContractVersion): Contract version
+            contract_type (ContractType): Contract type (`jpyc` or `jpyc_prepaid`)
             contract_address (EthChecksumAddress, optional): Contract address
         """
         if (
@@ -57,12 +57,12 @@ class JPYC(IJPYC):
         ):
             address = self.__deploy_contract(
                 client=client,
-                contract_version=contract_version,
+                contract_type=contract_type,
             )
             contract = self.__get_contract(
                 client=client,
                 contract_address=address,
-                contract_version=contract_version,
+                contract_type=contract_type,
             )
             self.__initialize_contract(
                 client=client,
@@ -72,12 +72,12 @@ class JPYC(IJPYC):
             address = (
                 contract_address
                 if contract_address is not None
-                else get_proxy_address(contract_version=contract_version)
+                else get_proxy_address(contract_type=contract_type)
             )
             contract = self.__get_contract(
                 client=client,
                 contract_address=address,
-                contract_version=contract_version,
+                contract_type=contract_type,
             )
 
         self.client = client
@@ -92,7 +92,7 @@ class JPYC(IJPYC):
     @staticmethod
     def __deploy_contract(
         client: SdkClient,
-        contract_version: ContractVersion = "2",
+        contract_type: ContractType = "jpyc",
     ) -> ChecksumAddress:
         """Deploy contracts to the configured network.
 
@@ -102,12 +102,12 @@ class JPYC(IJPYC):
 
         Args:
             client (SdkClient): Configured SDK client
-            contract_version (ContractVersion): Contract version
+            contract_type (ContractType): Contract type
 
         Returns:
             ChecksumAddress: Address of the deployed contracts
         """
-        file_path = resolve_artifacts_file_path(contract_version=contract_version)
+        file_path = resolve_artifacts_file_path(contract_type=contract_type)
         contract = client.w3.eth.contract(
             abi=get_artifacts(file_path, "abi"),
             bytecode=get_artifacts(file_path, "bytecode"),
@@ -120,14 +120,14 @@ class JPYC(IJPYC):
     def __get_contract(
         client: SdkClient,
         contract_address: ChecksumAddress,
-        contract_version: ContractVersion = "2",
+        contract_type: ContractType = "jpyc",
     ) -> Contract:
         """Get contract instance from the configured network.
 
         Args:
             client (SdkClient): Configured SDK client
             contract_address (ChecksumAddress): Contract address
-            contract_version (ContractVersion): Contract version
+            contract_type (ContractType): Contract type
 
         Returns:
             Contract: Address of the deployed contracts
@@ -135,9 +135,7 @@ class JPYC(IJPYC):
         return client.w3.eth.contract(  # type: ignore[call-overload]
             address=contract_address,
             abi=get_artifacts(
-                file_path=resolve_artifacts_file_path(
-                    contract_version=contract_version
-                ),
+                file_path=resolve_artifacts_file_path(contract_type=contract_type),
                 artifact_type="abi",
             ),
         )

@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > This `README` is mainly for the advanced users (e.g., contributors of this repo).
 
-This directory contains a collection of utility tools (e.g., functions, type definitions, constants) for the SDK.
+This directory contains a collection of utility tools (e.g., functions, type definitions, constants) of the SDK.
 
 ## 🌲 Directory Structure
 

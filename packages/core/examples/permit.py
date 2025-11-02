@@ -87,7 +87,7 @@ def main() -> None:
         spender=KNOWN_ACCOUNTS[1].address,
     )
     print(
-        f"Allowance of {KNOWN_ACCOUNTS[1].address}"
+        f"Allowance of {KNOWN_ACCOUNTS[1].address} "
         f"over {KNOWN_ACCOUNTS[0].address}'s assets: {allowance}"
     )
 
