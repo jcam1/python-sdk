@@ -9,10 +9,7 @@ from web3.contract.contract import ContractFunction
 type ChainName = Literal[
     "ethereum",
     "polygon",
-    "gnosis",
     "avalanche",
-    "astar",
-    "shiden",
     "localhost",
 ]
 

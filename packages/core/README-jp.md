@@ -21,12 +21,8 @@ JPYC Python SDK は、各ネットワーク上にデプロイされた JPYC コ�
 | Ethereum Sepolia テストネット |  ✅  |      ✅      | `ethereum` | `sepolia` |
 |      Polygon PoS メインネット |  ✅  |      ✅      | `polygon` | `mainnet` |
 |     Polygon Amoy テストネット |  ✅  |      ✅      | `polygon` | `amoy` |
-|           Gnosis メインネット |  ✅  |      ✅      | `gnosis` | `mainnet` |
-|    Gnosis Chiado テストネット |  ✅  |      ✅      | `gnosis` | `chiado` |
 |        Avalanche メインネット |  ✅  |      ✅      | `avalanche` | `mainnet` |
 |   Avalanche Fuji テストネット |  ✅  |      ✅      | `avalanche` | `fuji` |
-|            Astar メインネット |  ✅  |      ✅      | `astar` | `mainnet` |
-|           Shiden メインネット |  ✅  |      ✅      | `shiden` | `mainnet` |
 
 ## 🪄 使い方
 

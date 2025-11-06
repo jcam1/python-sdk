@@ -1,5 +1,5 @@
 version = 1
-revision = 2
+revision = 3
 requires-python = ">=3.12"
 
 [manifest]
@@ -547,7 +547,7 @@ wheels = [
 
 [[package]]
 name = "jpyc-core-sdk"
-version = "1.1.0"
+version = "2.0.0"
 source = { editable = "packages/core" }
 dependencies = [
     { name = "eth-typing" },
@@ -582,7 +582,7 @@ dev = [
 
 [[package]]
 name = "jpyc-python-sdks"
-version = "1.1.0"
+version = "2.0.0"
 source = { virtual = "." }
 
 [package.dev-dependencies]
