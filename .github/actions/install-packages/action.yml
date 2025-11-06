@@ -9,7 +9,7 @@ runs:
         version: "0.7.6"
     - uses: actions/setup-python@v5
       with:
-        python-version-file: "pyproject.toml"
+        python-version: '3.13'
     - name: Install packages
       shell: bash
       run: uv sync --locked --all-extras --dev

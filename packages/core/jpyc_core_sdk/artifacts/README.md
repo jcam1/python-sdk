@@ -7,7 +7,7 @@ This directory contains the auto-generated artifacts of [JPYC's core contracts](
 
 ## 📚 Available Versions
 
-| Version | File                   | Description                                |
+| Type | File                   | Description                                |
 | ------: | :--------------------- | :----------------------------------------- |
-|    `v3` | n/a                    | Coming Soon                                |
-|    `v2` | [`v2.json`](./v2.json) | Artifacts of JPYCv2 contracts (**latest**) |
+|    `jpyc` | [`jpyc.json`](./jpyc.json)                    | Contract artifacts of JPYC (**latest**)                                |
+|    `jpyc_prepaid` | [`jpyc_prepaid.json`](./jpyc_prepaid.json) | Contract artifacts of JPYC Prepaid |

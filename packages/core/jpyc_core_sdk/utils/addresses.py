@@ -8,7 +8,7 @@ from eth_typing import (
 from web3 import Web3
 from web3.constants import ADDRESS_ZERO
 
-from .types import ContractVersion
+from .types import ContractType
 
 ####################################
 # Address-related helper functions #
@@ -39,22 +39,20 @@ def is_valid_address(address: str) -> bool:
     return Web3.is_checksum_address(address)
 
 
-def get_proxy_address(contract_version: ContractVersion) -> ChecksumAddress:
-    """Get proxy address from the specified version.
-
-    Note:
-        Default address should be the address of the latest version \
-        (e.g., v2 as of May 2025).
+def get_proxy_address(contract_type: ContractType) -> ChecksumAddress:
+    """Get proxy address from the specified contract type.
 
     Args:
-        contract_version (ContractVersion): Contract version
+        contract_type (ContractType): Contract type (`jpyc` or `jpyc_prepaid`)
 
     Returns:
         ChecksumAddress: Checksum address of proxy contract
     """
-    match contract_version:
-        case "2":
-            return V2_PROXY_ADDRESS
+    match contract_type:
+        case "jpyc":
+            return JPYC_PROXY_ADDRESS
+        case "jpyc_prepaid":
+            return JPYC_PREPAID_PROXY_ADDRESS
 
 
 ######################
@@ -63,7 +61,11 @@ def get_proxy_address(contract_version: ContractVersion) -> ChecksumAddress:
 
 ZERO_ADDRESS: Final[ChecksumAddress] = calc_checksum_address(str(ADDRESS_ZERO))
 """ChecksumAddress: Zero address."""
-V2_PROXY_ADDRESS: Final[ChecksumAddress] = calc_checksum_address(
+JPYC_PROXY_ADDRESS: Final[ChecksumAddress] = calc_checksum_address(
+    "0xE7C3D8C9a439feDe00D2600032D5dB0Be71C3c29"
+)
+"""ChecksumAddress: Proxy address of JPYC contract."""
+JPYC_PREPAID_PROXY_ADDRESS: Final[ChecksumAddress] = calc_checksum_address(
     "0x431D5dfF03120AFA4bDf332c61A6e1766eF37BDB"
 )
-"""ChecksumAddress: JPYCv2 address."""
+"""ChecksumAddress: Proxy address of JPYC Prepaid contract."""

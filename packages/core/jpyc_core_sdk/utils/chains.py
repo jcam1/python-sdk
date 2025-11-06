@@ -33,18 +33,6 @@ SUPPORTED_CHAINS: Final[ChainMetadata] = {
             "rpc_endpoints": ["https://rpc-amoy.polygon.technology"],
         },
     },
-    "gnosis": {
-        "mainnet": {
-            "id": 100,
-            "name": "Gnosis Chain",
-            "rpc_endpoints": ["https://rpc.gnosischain.com"],
-        },
-        "chiado": {
-            "id": 10200,
-            "name": "Gnosis Chiado Testnet",
-            "rpc_endpoints": ["https://rpc.chiadochain.net"],
-        },
-    },
     "avalanche": {
         "mainnet": {
             "id": 43114,
@@ -55,20 +43,6 @@ SUPPORTED_CHAINS: Final[ChainMetadata] = {
             "id": 43113,
             "name": "Avalanche Fuji Testnet",
             "rpc_endpoints": ["https://api.avax-test.network/ext/bc/C/rpc"],
-        },
-    },
-    "astar": {
-        "mainnet": {
-            "id": 592,
-            "name": "Astar Network",
-            "rpc_endpoints": ["https://astar.public.blastapi.io"],
-        },
-    },
-    "shiden": {
-        "mainnet": {
-            "id": 336,
-            "name": "Shiden Network",
-            "rpc_endpoints": ["https://shiden.public.blastapi.io"],
         },
     },
     "localhost": {

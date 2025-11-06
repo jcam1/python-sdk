@@ -9,10 +9,7 @@ from web3.contract.contract import ContractFunction
 type ChainName = Literal[
     "ethereum",
     "polygon",
-    "gnosis",
     "avalanche",
-    "astar",
-    "shiden",
     "localhost",
 ]
 
@@ -30,8 +27,8 @@ type ChainMetadata = dict[ChainName, dict[str, NetworkMetadata]]
 # Contracts #
 #############
 
-type ContractVersion = Literal["2"]
-"""A type that contains available contract versions."""
+type ContractType = Literal["jpyc", "jpyc_prepaid"]
+"""A type that contains available contract types."""
 type ArtifactType = Literal["abi", "bytecode"]
 """A type that contains types of contract artifacts."""
 

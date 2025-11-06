@@ -15,10 +15,7 @@ def test_enumerate_supported_networks():
     assert (
         supported_networks == "'ethereum' => ['mainnet', 'sepolia'], "
         "'polygon' => ['mainnet', 'amoy'], "
-        "'gnosis' => ['mainnet', 'chiado'], "
         "'avalanche' => ['mainnet', 'fuji'], "
-        "'astar' => ['mainnet'], "
-        "'shiden' => ['mainnet'], "
         "'localhost' => ['devnet']"
     )
 

@@ -2,21 +2,19 @@ import json
 from pathlib import Path
 from typing import Any
 
-from .types import ArtifactType, ContractVersion
+from .types import ArtifactType, ContractType
 
 
-def resolve_artifacts_file_path(contract_version: ContractVersion) -> Path:
-    """Resolve the path of artifacts file from the specified contract version.
+def resolve_artifacts_file_path(contract_type: ContractType) -> Path:
+    """Resolve the path of artifacts file from the specified contract type.
 
     Args:
-        contract_version (ContractVersion): Contract version
+        contract_type (ContractType): Contract type
 
     Returns:
         Path: Absolute path of artifacts file
     """
-    path = Path(__file__).parent.parent.joinpath(
-        "artifacts", f"v{contract_version}.json"
-    )
+    path = Path(__file__).parent.parent.joinpath("artifacts", f"{contract_type}.json")
 
     return path.absolute()
 
