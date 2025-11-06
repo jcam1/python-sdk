@@ -21,12 +21,8 @@ The SDK supports the following contract types and networks as of October 2025. P
 | Ethereum Sepolia Testnet |  ✅  |      ✅      | `ethereum` | `sepolia` |
 |      Polygon PoS Mainnet |  ✅  |      ✅      | `polygon` | `mainnet` |
 |     Polygon Amoy Testnet |  ✅  |      ✅      | `polygon` | `amoy` |
-|           Gnosis Mainnet |  ✅  |      ✅      | `gnosis` | `mainnet` |
-|    Gnosis Chiado Testnet |  ✅  |      ✅      | `gnosis` | `chiado` |
 |        Avalanche Mainnet |  ✅  |      ✅      | `avalanche` | `mainnet` |
 |   Avalanche Fuji Testnet |  ✅  |      ✅      | `avalanche` | `fuji` |
-|            Astar Mainnet |  ✅  |      ✅      | `astar` | `mainnet` |
-|           Shiden Mainnet |  ✅  |      ✅      | `shiden` | `mainnet` |
 
 ## 🪄 Usage
 

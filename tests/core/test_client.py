@@ -193,7 +193,7 @@ def test_set_default_provider_failures(
 
 
 def test_set_custom_provider(sdk_client):
-    rpc_endpoint = "https://astar.public.blastapi.io"
+    rpc_endpoint = "https://polygon-rpc.com"
 
     sdk_client.set_custom_provider(
         rpc_endpoint=rpc_endpoint,
