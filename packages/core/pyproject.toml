@@ -41,6 +41,13 @@ dependencies = [
     "web3>=7.11.0",
 ]
 
+[project.optional-dependencies]
+# Optional post quantum attestation (jpyc_core_sdk/attestation.py).
+# Install with `pip install jpyc-core-sdk[pq]`.
+pq = [
+    "dilithium-py>=1.0.1",
+]
+
 [project.urls]
 repository = "https://github.com/jcam1/python-sdk"
 documentation = "https://github.com/jcam1/python-sdk/tree/main/docs/core"
